@@ -1,0 +1,1597 @@
+# mihomo 配置
+# 日期：2024-07-30 03:30:00
+# 配置作者：https://t.me/iKeLee
+# 修改作者：
+# 适用版本：所有使用 mihomo 核心的程序
+# port: 7890 # HTTP(S) 代理服务器端口
+# socks-port: 7891 # SOCKS5 代理端口
+mixed-port: 10801 # HTTP(S) 和 SOCKS 代理混合端口
+# redir-port: 7892 # 透明代理端口，用于 Linux 和 MacOS
+
+# Transparent proxy server port for Linux (TProxy TCP and TProxy UDP)
+# tproxy-port: 7893
+
+allow-lan: true # 允许局域网连接
+bind-address: "*" # 绑定 IP 地址，仅作用于 allow-lan 为 true，'*'表示所有地址
+# authentication: # http,socks 入口的验证用户名，密码
+#   - "username:password"
+skip-auth-prefixes: # 设置跳过验证的 IP 段
+  - 127.0.0.1/8
+  - ::1/128
+lan-allowed-ips: # 允许连接的 IP 地址段，仅作用于 allow-lan 为 true, 默认值为 0.0.0.0/0 和::/0
+  - 0.0.0.0/0
+  - ::/0
+# lan-disallowed-ips: # 禁止连接的 IP 地址段，黑名单优先级高于白名单，默认值为空
+#   - 192.168.0.3/32
+
+#  find-process-mode has 3 values:always, strict, off
+#  - always, 开启，强制匹配所有进程
+#  - strict, 默认，由 mihomo 判断是否开启
+#  - off, 不匹配进程，推荐在路由器上使用此模式
+find-process-mode: strict
+
+mode: rule # 运行模式。rule 规则匹配；global 全局代理 (需要在 GLOBAL 策略组选择代理/策略)；direct 全局直连。此项拥有默认值，默认为规则模式
+unified-delay: true # 开启统一延迟时，会进行两次延迟测试，以消除连接握手等带来的不同类型节点的延迟差异，可选值 true/false
+geodata-mode: true # 更改 geoip 使用文件，mmdb 或者 dat，可选 true/false,true为 dat，此项有默认值 false
+geodata-loader: standard # 可选的加载模式如下：standard：标准加载器/ memconservative：专为内存受限 (小内存) 设备优化的加载器 (默认值)
+udp: true # 是否允许 UDP 通过代理，默认为 false。此选项在 TUIC 等基于 UDP 的协议以及 direct 和 dns 类型中默认开启
+
+#自定义 geodata url
+geox-url:
+  ## Loyalsoldier
+  # geoip: https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat
+  # geosite: https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat
+  # mmdb: https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb
+  # asn: https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country-asn.mmdb
+
+  # MetaCubeX
+  geoip: https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat
+  geosite: https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
+  mmdb: https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb
+  asn: https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country-lite.mmdb
+
+  geo-auto-update: true # 是否自动更新 geodata
+  geo-update-interval: 3 # 更新间隔，单位：小时
+
+# Matcher implementation used by GeoSite, available implementations:
+# - succinct (default, same as rule-set)
+# - mph (from V2Ray, also `hybrid` in Xray)
+# geosite-matcher: succinct
+
+log-level: error # 日志等级 silent/error/warning/info/debug
+
+ipv6: true # 开启 IPv6 总开关，关闭阻断所有 IPv6 链接和屏蔽 DNS 请求 AAAA 记录
+
+# tls:
+#   certificate: string # 证书 PEM 格式，或者 证书的路径
+#   private-key: string # 证书对应的私钥 PEM 格式，或者私钥路径
+#   custom-certifactes:
+#     - |
+#       -----BEGIN CERTIFICATE-----
+#       format/pem...
+#       -----END CERTIFICATE-----
+
+external-controller: 0.0.0.0:9090 # RESTful API 监听地址
+# external-controller-tls: 0.0.0.0:9443 # RESTful API HTTPS 监听地址，需要配置 tls 部分配置文件
+# secret: "123456" # `Authorization:Bearer ${secret}`
+
+# RESTful API Unix socket 监听地址（ windows版本大于17063也可以使用，即大于等于1803/RS4版本即可使用 ）
+# ！！！注意： 从Unix socket访问api接口不会验证secret， 如果开启请自行保证安全问题 ！！！
+# 测试方法： curl -v --unix-socket "mihomo.sock" http://localhost/
+external-controller-unix: mihomo.sock
+
+tcp-concurrent: true # TCP 并发连接所有 IP, 将使用最快握手的 TCP
+
+# 配置 WEB UI 目录，使用 http://{{external-controller}}/ui 访问
+# external-ui: /path/to/ui/folder/
+# external-ui-name: xd
+# external-ui-url: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+
+# 在RESTful API端口上开启DOH服务器
+# ！！！该URL不会验证secret， 如果开启请自行保证安全问题 ！！！
+# external-doh-server: /dns-query
+
+# interface-name: en0 # 设置出口网卡
+
+# 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint
+# 可选： "chrome","firefox","safari","ios","random","none" options.
+# Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
+global-client-fingerprint: chrome
+
+#  控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施。单位为秒。
+keep-alive-interval: 30
+
+# routing-mark:6666 # 配置 fwmark 仅用于 Linux
+#experimental:
+  # Disable quic-go GSO support. This may result in reduced performance on Linux.
+  # This is not recommended for most users.
+  # Only users encountering issues with quic-go's internal implementation should enable this,
+  # and they should disable it as soon as the issue is resolved.
+  # This field will be removed when quic-go fixes all their issues in GSO.
+  # This equivalent to the environment variable QUIC_GO_DISABLE_GSO=1.
+  #quic-go-disable-gso: true
+
+# 类似于 /etc/hosts, 仅支持配置单个 IP
+# hosts:
+  # '*.mihomo.dev': 127.0.0.1
+  # '.dev': 127.0.0.1
+  # 'alpha.mihomo.dev': '::1'
+  # test.com: [1.1.1.1, 2.2.2.2]
+  # home.lan: lan # lan 为特别字段，将加入本地所有网卡的地址
+  # baidu.com: google.com # 只允许配置一个别名
+  # 'mtalk.google.com': 142.250.157.188
+  # 'alt1-mtalk.google.com': 142.250.157.188
+  # 'alt2-mtalk.google.com': 142.250.115.188  
+  # 'alt3-mtalk.google.com': 108.177.97.188
+  # 'alt4-mtalk.google.com': 173.194.202.188 
+  # 'alt5-mtalk.google.com': 142.250.141.188
+  # 'alt6-mtalk.google.com': 142.250.115.188 
+  # 'alt7-mtalk.google.com': 142.250.141.188
+  # 'alt8-mtalk.google.com': 142.250.152.188
+  # 'dl.google.com': 180.163.151.161
+  # 'dl.l.google.com': 180.163.150.33
+  # '[2404:6800:4008:c07::bc]': mtalk.google.com
+  # '[2607:f8b0:4023:c0b::bc]': alt1-mtalk.google.com
+  # '[2607:f8b0:4023:1::bc]': alt3-mtalk.google.com
+  # '[2607:f8b0:4002:c03::bc]': alt7-mtalk.google.com
+
+profile:
+  # 储存 API 对策略组的选择，以供下次启动时使用
+  store-selected: true
+  # 储存 fakeip 映射表，域名再次发生连接时，使用原有映射地址
+  store-fake-ip: true
+
+# 网络时间协议
+ntp:
+  # 默认 flase 。慎用！！
+  # 容易导致 OpenClash 的 TUN 内核启动缓慢或启动失败
+  # 手机端需 root 使用，否则会导致客户端崩溃
+  enable: false
+  # 是否同步至系统时间，需要 root、管理员模式运行。
+  write-to-system: false
+  # NTP 服务地址，默认 time.apple.com
+  server: time.apple.com
+  # NTP 服务端口，默认 123
+  port: 123
+  # 同步时间间隔，单位（分），默认同步间隔为 30 分
+  interval: 30
+
+# Tun 配置
+tun:
+  enable: true
+  # stack
+  # tun 模式堆栈，如无使用问题，建议使用 mixed栈，默认 gvisor
+  # 可用值： system/gvisor/mixed
+  # system 使用系统协议栈，可以提供更稳定/全面的 tun 体验，且占用相对其他堆栈更低
+  # gvisor 通过在用户空间中实现网络协议栈，可以提供更高的安全性和隔离性，同时可以避免操作系统内核和用户空间之间的切换，从而在特定情况下具有更好的网络处理性能
+  # mixed 混合堆栈，tcp 使用 system栈，udp 使用 gvisor栈，使用体验可能相对更好
+  stack: mixed
+  dns-hijack:
+    - "any:53" # 需要劫持的 DNS
+  auto-detect-interface: true # 自动识别出口网卡
+  auto-route: true # 配置路由表
+  # mtu: 9000 # 最大传输单元
+  # gso: false # 启用通用分段卸载，仅支持 Linux
+  # gso-max-size: 65536 # 通用分段卸载包的最大大小
+  auto-redirect: true # 自动配置 iptables 以重定向 TCP 连接。仅支持 Linux。带有 auto-redirect 的 auto-route 现在可以在路由器上按预期工作，无需干预。
+  # strict-route: true # 将所有连接路由到 tun 来防止泄漏，但你的设备将无法其他设备被访问
+  # route-address-set: # 将指定规则集中的目标 IP CIDR 规则添加到防火墙, 不匹配的流量将绕过路由, 仅支持 Linux，且需要 nftables，`auto-route` 和 `auto-redirect` 已启用。
+  #   - ruleset-1
+  #   - ruleset-2
+  # route-exclude-address-set: # 将指定规则集中的目标 IP CIDR 规则添加到防火墙, 匹配的流量将绕过路由, 仅支持 Linux，且需要 nftables，`auto-route` 和 `auto-redirect` 已启用。
+  #   - ruleset-3
+  #   - ruleset-4
+  # route-address: # 启用 auto-route 时使用自定义路由而不是默认路由
+  #   - 0.0.0.0/1
+  #   - 128.0.0.0/1
+  #   - "::/1"
+  #   - "8000::/1"
+  # inet4-route-address: # 启用 auto-route 时使用自定义路由而不是默认路由（旧写法）
+  #   - 0.0.0.0/1
+  #   - 128.0.0.0/1
+  # inet6-route-address: # 启用 auto-route 时使用自定义路由而不是默认路由（旧写法）
+  #   - "::/1"
+  #   - "8000::/1"
+  # endpoint-independent-nat: false # 启用独立于端点的 NAT
+  # include-interface: # 限制被路由的接口。默认不限制，与 `exclude-interface` 冲突
+  #   - "lan0"
+  # exclude-interface: # 排除路由的接口，与 `include-interface` 冲突
+  #   - "lan1"
+  # include-uid: # UID 规则仅在 Linux 下被支持，并且需要 auto-route
+  # - 0
+  # include-uid-range: # 限制被路由的的用户范围
+  # - 1000:9999
+  # exclude-uid: # 排除路由的的用户
+  #- 1000
+  # exclude-uid-range: # 排除路由的的用户范围
+  # - 1000:9999
+
+  # Android 用户和应用规则仅在 Android 下被支持
+  # 并且需要 auto-route
+
+  # include-android-user: # 限制被路由的 Android 用户
+  # - 0
+  # - 10
+  # include-package: # 限制被路由的 Android 应用包名
+  # - com.android.chrome
+  # exclude-package: # 排除被路由的 Android 应用包名
+  # - com.android.captiveportallogin
+
+# ebpf 配置
+# ebpf:
+#   auto-redir: # redirect 模式，仅支持 TCP
+#     - eth0
+#   redirect-to-tun: # UDP+TCP 使用该功能请勿启用 auto-route
+#     - eth0
+
+# 嗅探域名 可选配置
+sniffer:
+  enable: true
+  ## 对 redir-host 类型识别的流量进行强制嗅探
+  ## 如：Tun、Redir 和 TProxy 并 DNS 为 redir-host 皆属于
+  force-dns-mapping: true
+  ## 对所有未获取到域名的流量进行强制嗅探
+  parse-pure-ip: true
+  # 是否使用嗅探结果作为实际访问，默认 true
+  # 全局配置，优先级低于 sniffer.sniff 实际配置
+  override-destination: true
+  sniff: # TLS 和 QUIC 默认如果不配置 ports 默认嗅探 443
+    # 默认嗅探 80
+    HTTP: # 需要嗅探的端口
+      ports: [80, 8080-8880]
+      # 可覆盖 sniffer.override-destination
+      override-destination: true
+    TLS:
+      # Google FCM 服务器端口 5228
+      ports: [443, 5228, 8443]
+    QUIC:
+      # Google FCM 服务器端口 5228
+      ports: [443, 5228, 8443]
+  force-domain:
+    - +.v2ex.com
+    # Google FCM 服务器
+    - alt1-mtalk.google.com
+    - alt2-mtalk.google.com
+    - alt3-mtalk.google.com
+    - alt4-mtalk.google.com
+    - alt5-mtalk.google.com
+    - alt6-mtalk.google.com
+    - alt7-mtalk.google.com
+    - alt8-mtalk.google.com
+    - mtalk.google.com
+    # Google DL 服务器
+    - dl.google.com
+    - dl.l.google.com
+  ## 对嗅探结果进行跳过
+  skip-domain:
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - +.apple.com
+  # 需要嗅探协议
+  # 已废弃，若 sniffer.sniff 配置则此项无效
+  # sniffing:
+  #   - tls
+  #   - http
+  # 强制对此域名进行嗅探
+
+  # 仅对白名单中的端口进行嗅探，默认为 443，80
+  # 已废弃，若 sniffer.sniff 配置则此项无效
+  # port-whitelist:
+  #   - "80"
+  #   - "443"
+    # - 8000-9999
+
+# tunnels: # one line config
+#   - tcp/udp,127.0.0.1:6553,114.114.114.114:53,proxy
+#   - tcp,127.0.0.1:6666,rds.mysql.com:3306,vpn
+  # full yaml config
+#   - network: [tcp, udp]
+#     address: 127.0.0.1:7777
+#     target: target.com
+#     proxy: proxy
+
+# DNS 配置
+# 锚点 - DNS 筛选组
+## 锚点 - 国外 DoT DNS IP 服务器。无过滤
+DoT_IP_NoFilter: &DoT_IP_NoFilter ['tls://94.140.14.140', 'tls://94.140.14.141', 'tls://1.1.1.1', 'tls://1.0.0.1', 'tls://8.8.8.8', 'tls://8.8.4.4', 'tls://208.67.222.2', 'tls://208.67.220.2', 'tls://9.9.9.10', 'tls://149.112.112.10', 'tls://77.88.8.1', 'tls://77.88.8.8', 'tls://[2606:4700:4700::1111]', 'tls://[2606:4700:4700::1001]', 'tls://[2606:4700:4700::64]', 'tls://[2606:4700:4700::6400]', 'tls://[2001:4860:4860::6464]', 'tls://[2001:4860:4860::64]', 'tls://[2620:0:ccc::2]', 'tls://[2620:0:ccd::2]', 'tls://[2620:fe::10]', 'tls://[2620:fe::fe:10]']
+## 锚点 - 国外 DoT DNS IP 服务器。安全。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域
+DoT_IP_Safe: &DoT_IP_Safe ['tls://94.140.14.14', 'tls://94.140.15.15', 'tls://208.67.222.222', 'tls://208.67.220.220', 'tls://9.9.9.9', 'tls://149.112.112.112', 'tls://77.88.8.2', 'tls://77.88.8.88', 'tls://[2620:119:35::35]', 'tls://[2620:119:53::53]', 'tls://[2620:fe::fe]', 'tls://[2620:fe::9]']
+## 锚点 - 国外 DoT DNS IP 服务器。家庭保护。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域、成人内容
+DoT_IP_Family: &DoT_IP_Family ['tls://94.140.14.15', 'tls://94.140.15.16', 'tls://208.67.222.123', 'tls://208.67.220.123', 'tls://77.88.8.3', 'tls://77.88.8.7', 'tls://[2620:119:35::123]', 'tls://[2620:119:53::123]']
+## 锚点 - 国外 DoH DNS IP 服务器。无过滤
+DoH_IP_NoFilter: &DoH_IP_NoFilter ['https://94.140.14.140/dns-query', 'https://94.140.14.141/dns-query', 'https://1.1.1.1/dns-query', 'https://1.0.0.1/dns-query', 'https://8.8.8.8/dns-query', 'https://8.8.4.4/dns-query', 'https://208.67.222.2/dns-query', 'https://208.67.220.2/dns-query', 'https://9.9.9.10/dns-query', 'https://149.112.112.10/dns-query', 'https://77.88.8.1/dns-query', 'https://77.88.8.8/dns-query', 'https://[2606:4700:4700::1111]/dns-query', 'https://[2606:4700:4700::1001]/dns-query', 'https://[2606:4700:4700::64]/dns-query', 'https://[2606:4700:4700::6400]/dns-query', 'https://[2001:4860:4860::6464]/dns-query', 'https://[2001:4860:4860::64]/dns-query', 'https://[2620:0:ccc::2]/dns-query', 'https://[2620:0:ccd::2]/dns-query', 'https://[2620:fe::10]/dns-query', 'https://[2620:fe::fe:10]/dns-query']
+## 锚点 - 国外 DoH DNS IP 服务器。安全。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域
+DoH_IP_Safe: &DoH_IP_Safe ['https://94.140.14.14/dns-query', 'https://94.140.15.15/dns-query', 'https://1.1.1.2/dns-query', 'https://1.0.0.2/dns-query', 'https://208.67.222.222/dns-query', 'https://208.67.220.220/dns-query', 'https://9.9.9.9/dns-query', 'https://149.112.112.112/dns-query', 'https://77.88.8.2/dns-query', 'https://77.88.8.88/dns-query', 'https://[2606:4700:4700::1112]/dns-query', 'https://[2606:4700:4700::1002]/dns-query', 'https://[2620:119:35::35]/dns-query', 'https://[2620:119:53::53]/dns-query', 'https://[2620:fe::fe]/dns-query', 'https://[2620:fe::9]/dns-query']
+## 锚点 - 国外 DoH DNS IP 服务器。家庭保护。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域、成人内容
+DoH_IP_Family: &DoH_IP_Family ['https://94.140.14.15/dns-query', 'https://94.140.15.16/dns-query', 'https://1.1.1.3/dns-query', 'https://1.0.0.3/dns-query', 'https://208.67.222.123/dns-query', 'https://208.67.220.123/dns-query', 'https://77.88.8.3/dns-query', 'https://77.88.8.7/dns-query', 'https://[2606:4700:4700::1113]/dns-query', 'https://[2606:4700:4700::1003]/dns-query', 'https://[2620:119:35::123]/dns-query', 'https://[2620:119:53::123]/dns-query']
+## 锚点 - 国外 H3 DNS IP 服务器。无过滤
+H3_IP_NoFilter: &H3_IP_NoFilter ['https://94.140.14.140/dns-query#h3=true', 'https://94.140.14.141/dns-query#h3=true', 'https://1.1.1.1/dns-query#h3=true', 'https://1.0.0.1/dns-query#h3=true', 'https://8.8.8.8/dns-query#h3=true', 'https://8.8.4.4/dns-query#h3=true', 'https://[2606:4700:4700::1111]/dns-query#h3=true', 'https://[2606:4700:4700::1001]/dns-query#h3=true', 'https://[2606:4700:4700::64]/dns-query#h3=true', 'https://[2606:4700:4700::6400]/dns-query#h3=true', 'https://[2001:4860:4860::6464]/dns-query#h3=true', 'https://[2001:4860:4860::64]/dns-query#h3=true']
+## 锚点 - 国外 H3 DNS IP 服务器。安全。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域
+H3_IP_Safe: &H3_IP_Safe ['https://94.140.14.14/dns-query#h3=true', 'https://94.140.15.15/dns-query#h3=true', 'https://1.0.0.2/dns-query#h3=true', 'https://[2606:4700:4700::1112]/dns-query#h3=true', 'https://[2606:4700:4700::1002]/dns-query#h3=true']
+## 锚点 - 国外 H3 DNS IP 服务器。家庭保护。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域、成人内容
+H3_IP_Family: &H3_IP_Family ['https://94.140.14.15/dns-query#h3=true', 'https://94.140.15.16/dns-query#h3=true', 'https://1.1.1.3/dns-query#h3=true', 'https://1.0.0.3/dns-query#h3=true', 'https://[2606:4700:4700::1113]/dns-query#h3=true', 'https://[2606:4700:4700::1003]/dns-query#h3=true']
+
+## 锚点 - 国外 DoT DNS 域名服务器。无过滤
+DoT_Domain_NoFilter: &DoT_Domain_NoFilter ['tls://dns-unfiltered.adguard.com', 'tls://one.one.one.one', 'tls://1dot1dot1dot1.cloudflare-dns.com', 'tls://dns64.cloudflare-dns.com', 'tls://private.canadianshield.cira.ca', 'tls://dns.google', 'tls://dns64.dns.google', 'tls://sandbox.opendns.com', 'tls://dns-nosec.quad9.net']
+## 锚点 - 国外 DoT DNS 域名服务器。安全。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域
+DoT_Domain_Safe: &DoT_Domain_Safe ['tls://dns.adguard.com', 'tls://security.cloudflare-dns.com', 'tls://protected.canadianshield.cira.ca', 'tls://dns.opendns.com', 'tls://dns.umbrella.com', 'tls://dns.quad9.net']
+## 锚点 - 国外 DoT DNS 域名服务器。家庭保护。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域、成人内容
+DoT_Domain_Family: &DoT_Domain_Family ['tls://family-filter-dns.cleanbrowsing.org', 'tls://adult-filter-dns.cleanbrowsing.org', 'tls://security-filter-dns.cleanbrowsing.org', 'tls://dns-family.adguard.com', 'tls://family.cloudflare-dns.com', 'tls://family.canadianshield.cira.ca', 'tls://familyshield.opendns.com']
+## 锚点 - 国外 DoH DNS 域名服务器。无过滤
+DoH_Domain_NoFilter: &DoH_Domain_NoFilter ['https://dns-unfiltered.adguard.com/dns-query', 'https://one.one.one.one/dns-query', 'https://1DoH1DoH1DoH1.cloudflare-dns.com/dns-query', 'https://dns64.cloudflare-dns.com/dns-query', 'https://private.canadianshield.cira.ca', 'https://dns.google/dns-query', 'https://dns64.dns.google/dns-query', 'https://sandbox.opendns.com/dns-query', 'https://dns-nosec.quad9.net/dns-query']
+## 锚点 - 国外 DoH DNS 域名服务器。安全。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域
+DoH_Domain_Safe: &DoH_Domain_Safe ['https://dns.adguard.com/dns-query', 'https://security.cloudflare-dns.com/dns-query', 'https://protected.canadianshield.cira.ca', 'https://dns.opendns.com/dns-query', 'https://dns.umbrella.com/dns-query', 'https://dns.quad9.net/dns-query']
+## 锚点 - 国外 DoH DNS 域名服务器。家庭保护。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域、成人内容
+DoH_Domain_Family: &DoH_Domain_Family ['https://family-filter-dns.cleanbrowsing.org/dns-query', 'https://adult-filter-dns.cleanbrowsing.org/dns-query', 'https://security-filter-dns.cleanbrowsing.org/dns-query', 'https://dns-family.adguard.com/dns-query', 'https://family.cloudflare-dns.com/dns-query', 'https://family.canadianshield.cira.ca', 'https://familyshield.opendns.com/dns-query']
+## 锚点 - 国外 H3 DNS 域名服务器。无过滤
+H3_Domain_NoFilter: &H3_Domain_NoFilter ['https://dns-unfiltered.adguard.com/dns-query#h3=true', 'https://1dot1dot1dot1.cloudflare-dns.com/dns-query#h3=true', 'https://dns64.cloudflare-dns.com/dns-query#h3=true', 'https://private.canadianshield.cira.ca/dns-query#h3=true', 'https://dns.google/dns-query#h3=true', 'https://dns64.dns.google/dns-query#h3=true']
+## 锚点 - 国外 H3 DNS 域名服务器。安全。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域
+H3_Domain_Safe: &H3_Domain_Safe ['https://dns.adguard.com/dns-query#h3=true', 'https://security.cloudflare-dns.com/dns-query#h3=true', 'https://protected.canadianshield.cira.ca/dns-query#h3=true']
+## 锚点 - 国外 H3 DNS 域名服务器。家庭保护。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域、成人内容
+H3_Domain_Family: &H3_Domain_Family ['https://dns-family.adguard.com/dns-query#h3=true', 'https://family.cloudflare-dns.com/dns-query#h3=true', 'https://family.canadianshield.cira.ca/dns-query#h3=true']
+
+dns:
+  cache-algorithm: arc
+  enable: true # 关闭将使用系统 DNS
+  prefer-h3: true # 是否开启 DoH 支持 HTTP/3，将并发尝试
+  listen: :1053 # 开启 DNS 服务器监听
+  ipv6: true # false 将返回 AAAA 的空结果
+  ipv6-timeout: 300 # 单位：ms，内部双栈并发时，向上游查询 AAAA 时，等待 AAAA 的时间，默认 100ms
+  # 用于解析 nameserver，fallback 以及其他 DNS 服务器配置的，DNS 服务域名
+  # 只能使用纯 IP 地址，可使用加密 DNS
+  default-nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+    - 1.12.12.12
+    - 120.53.53.53
+    - '[2400:3200::1]'
+    - '[2400:3200:baba::1]'
+    - '[2402:4e00::]'
+  enhanced-mode: fake-ip # or redir-host
+
+  fake-ip-range: 198.18.0.1/16 # fake-ip 池设置
+
+  # use-hosts: true # 查询 hosts
+
+  # 配置后面的nameserver、fallback和nameserver-policy向dns服务器的连接过程是否遵守遵守rules规则
+  # 如果为false（默认值）则这三部分的dns服务器在未特别指定的情况下会直连
+  # 如果为true，将会按照rules的规则匹配链接方式（走代理或直连），如果有特别指定则任然以指定值为准
+  # 仅当proxy-server-nameserver非空时可以开启此选项, 强烈不建议和prefer-h3一起使用
+  # 此外，这三者配置中的dns服务器如果出现域名会采用default-nameserver配置项解析，也请确保正确配置default-nameserver
+  # respect-rules: false
+
+  # 配置不使用 fake-ip 的域名
+  fake-ip-filter:
+    - '*.*.xboxlive.com'
+    - '*.126.net'
+    - '*.example'
+    - '*.ff14.sdo.com'
+    - '*.ffxiv.com'
+    - '*.finalfantasyxiv.com'
+    - '*.home.arpa'
+    - '*.invalid'
+    - '*.kuwo.cn'
+    - '*.lan'
+    - '*.linksys.com'
+    - '*.linksyssmartwifi.com'
+    - '*.local'
+    - '*.localdomain'
+    - '*.localhost'
+    - '*.mcdn.bilivideo.cn'
+    - '*.music.163.com'
+    - '*.music.migu.cn'
+    - '*.n.n.srv.nintendo.net'
+    - '*.ntp.org.cn'
+    - '*.router.asus.com'
+    - '*.square-enix.com'
+    - '*.test'
+    - '*.time.edu.cn'
+    - '*.xiami.com'
+    - '*.y.qq.com'
+    - '+.3gppnetwork.org'
+    - '+.battlenet.com.cn'
+    - '+.blzstatic.cn'
+    - '+.cmbchina.com'
+    - '+.cmbchina.com.cn'
+    - '+.cmbimg.com'
+    - '+.cmpassport.com'
+    - '+.icitymobile.mobi'
+    - '+.jegotrip.com.cn'
+    - '+.logon.battle.net'
+    - '+.logon.battlenet.com.cn'
+    - '+.media.dssott.com'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - '+.n0808.com'
+    - '+.nflxvideo.net'
+    - '+.ntp.org.cn'
+    - '+.pingan.com.cn'
+    - '+.pool.ntp.org'
+    - '+.qq.com'
+    - '+.sandai.net'
+    - '+.srv.nintendo.net'
+    - '+.stun.*.*'
+    - '+.stun.*.*.*'
+    - '+.stun.*.*.*.*'
+    - '+.stun.*.*.*.*.*'
+    - '+.stun.playstation.net'
+    - '+.tencent.com'
+    - '+.wargaming.net'
+    - '+.wggames.cn'
+    - '+.wotgame.cn'
+    - '+.wowsgame.cn'
+    - '+.xboxlive.com'
+    - 'Mijia Cloud'
+    - 'adguardteam.github.io'
+    - 'alt1-mtalk.google.com'
+    - 'alt2-mtalk.google.com'
+    - 'alt3-mtalk.google.com'
+    - 'alt4-mtalk.google.com'
+    - 'alt5-mtalk.google.com'
+    - 'alt6-mtalk.google.com'
+    - 'alt7-mtalk.google.com'
+    - 'alt8-mtalk.google.com'
+    - 'amobile.music.tc.qq.com'
+    - 'anti-ad.net'
+    - 'api-jooxtt.sanook.com'
+    - 'api.joox.com'
+    - 'aqqmusic.tc.qq.com'
+    - 'auth.wosms.cn'
+    - 'cable.auth.com'
+    - 'detectportal.firefox.com'
+    - 'dl.google.com'
+    - 'dl.l.google.com'
+    - 'dl.stream.qqmusic.qq.com'
+    - 'ff.dorado.sdo.com'
+    - 'global.stun.twilio.com'
+    - 'global.turn.twilio.com'
+    - 'heartbeat.belkin.com'
+    - 'id6.me'
+    - 'isure.stream.qqmusic.qq.com'
+    - 'joox.com'
+    - 'lens.l.google.com'
+    - 'local.adguard.org'
+    - 'localhost.*.qq.com'
+    - 'localhost.ptlogin2.qq.com'
+    - 'localhost.sec.qq.com'
+    - 'mdn.open.wo.cn'
+    - 'mesu.apple.com'
+    - 'mobileoc.music.tc.qq.com'
+    - 'mtalk.google.com'
+    - 'music.163.com'
+    - 'music.migu.cn'
+    - 'music.taihe.com'
+    - 'musicapi.taihe.com'
+    - 'na.b.g-tun.com'
+    - 'network-test.debian.org'
+    - 'ntp.*.com'
+    - 'ntp1.*.com'
+    - 'ntp2.*.com'
+    - 'ntp3.*.com'
+    - 'ntp4.*.com'
+    - 'ntp5.*.com'
+    - 'ntp6.*.com'
+    - 'ntp7.*.com'
+    - 'ntp?.*.com'
+    - 'open.e.189.cn'
+    - 'opencloud.wostore.cn'
+    - 'pool.ntp.org'
+    - 'proxy.golang.org'
+    - 'resolver1.opendns.com'
+    - 'shark007.net'
+    - 'songsearch.kugou.com'
+    - 'static.adtidy.org'
+    - 'streamoc.music.tc.qq.com'
+    - 'stun.*'
+    - 'stun.*.*'
+    - 'stun.*.*.*'
+    - 'stun.l.google.com'
+    - 'swcdn.apple.com'
+    - 'swdist.apple.com'
+    - 'swdownload.apple.com'
+    - 'swquery.apple.com'
+    - 'swscan.apple.com'
+    - 'time-ios.apple.com'
+    - 'time.*.apple.com'
+    - 'time.*.com'
+    - 'time.*.edu.cn'
+    - 'time.*.gov'
+    - 'time1.*.com'
+    - 'time1.cloud.tencent.com'
+    - 'time2.*.com'
+    - 'time3.*.com'
+    - 'time4.*.com'
+    - 'time5.*.com'
+    - 'time6.*.com'
+    - 'time7.*.com'
+    - 'time?.*.com'
+    - 'trackercdn.kugou.com'
+    - 'xbox.*.*.microsoft.com'
+    - 'xbox.*.microsoft.com'
+    - 'xnotify.xboxlive.com'
+    - 'y.qq.com'
+    - WORKGROUP
+
+  # DNS 主要域名配置
+  # 支持 UDP，TCP，DoT，DoH，DoQ
+  # 这部分为主要 DNS 配置，影响所有直连，确保使用对大陆解析精准的 DNS
+  # DoT_IP_NoFilter/DoH_IP_NoFilter/DoT_Domain_NoFilter/DoH_Domain_NoFilter 无过滤
+  # DoT_IP_Safe/DoH_IP_Safe/DoT_Domain_Safe/DoH_Domain_Safe 安全。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域
+  # DoT_IP_Family/DoH_IP_Family/DoT_Domain_Family/DoH_Domain_Family 家庭保护。基本安全筛选、用户定义的策略、拦截广告、跟踪器、恶意软件、网络钓鱼、漏洞利用工具包域、成人内容
+  nameserver: *DoH_IP_Safe
+  fallback: *DoH_IP_Safe
+
+  # 专用于节点域名解析的 DNS 服务器，非必要配置项
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query#h3=true
+    - https://doh.pub/dns-query
+
+  # 配置 fallback 使用条件
+  # fallback-filter:
+  #   geoip: true # 配置是否使用 geoip
+  #   geoip-code: CN # 当 nameserver 域名的 IP 查询 geoip 库为 CN 时，不使用 fallback 中的 DNS 查询结果
+  #   配置强制 fallback，优先于 IP 判断，具体分类自行查看 geosite 库
+  #   geosite:
+  #     - gfw
+  #   如果不匹配 ipcidr 则使用 nameservers 中的结果
+  #   ipcidr:
+  #     - 240.0.0.0/4
+  #   domain:
+  #     - '+.google.com'
+  #     - '+.facebook.com'
+  #     - '+.youtube.com'
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    # geoipsite:
+    #   - gfw
+    ipcidr:
+      - 0.0.0.0/8
+      - 10.0.0.0/8
+      - 100.64.0.0/10
+      - 127.0.0.0/8
+      - 169.254.0.0/16
+      - 172.16.0.0/12
+      - 192.0.0.0/24
+      - 192.0.2.0/24
+      - 192.168.0.0/16
+      - 192.88.99.0/24
+      - 198.18.0.0/15
+      - 198.51.100.0/24
+      - 203.0.113.0/24
+      - 224.0.0.0/4
+      - 240.0.0.0/4
+      - 255.255.255.255/32
+    domain:
+      - '+.facebook.com'
+      - '+.google.com'
+      - '+.googleapis.com'
+      - '+.googlevideo.com'
+      - '+.youtube.com'
+      - '+.x.com'
+      - '+.tiktok.com'
+      - '+.instagram.com'
+      - '+.netfix.com'
+      - '+.hbo.com'
+      - '+.disneyplus.com'
+      - '+.github.com'
+      # - '+.githubusercontent.com'
+
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443 and (geoip(resolve_ip(host)) != 'CN'
+      or geoip(dst_ip) != 'CN')
+
+  # 配置查询域名使用的 DNS 服务器
+  nameserver-policy:
+    "geosite:category-ads-all": rcode://success
+    # "geosite:gfw": ['https://1.1.1.2/dns-query#h3=true', 'https://1.0.0.2/dns-query#h3=true', 'https://[2606:4700:4700::64]/dns-query#h3=true', 'https://[2606:4700:4700::6400]/dns-query#h3=true', *H3_IP_Safe]
+    # "geosite:google": *H3_IP_NoFilter
+    "geosite:geolocation-!cn": *H3_IP_NoFilter
+    "geosite:microsoft@cn,apple-cn,category-games@cn,cn,private": ['https://dns.alidns.com/dns-query#h3=true', 'https://doh.pub/dns-query']
+    ## global，dns 为 rule-providers 中的名为 global 和 dns 规则订阅，
+    ## 且 behavior 必须为 domain/classical，当为 classical 时仅会生效域名类规则
+    # "rule-set:global,dns": 8.8.8.8
+
+# 锚点 - 节点订阅的参数 [每小时更新一次订阅节点，每 6 秒一次健康检查]
+NodeParam: &NodeParam {type: http, interval: 3600, health-check: {enable: true, url: 'https://cp.cloudflare.com', interval: 6}}
+
+# 代理集合
+proxy-providers:
+  订阅节点1:
+    url: 'https://api.acaisbest.shop/api/v1/client/subscribe?token=847cc04e877ebcba253d8c8ab38c679c'                   # 将用于订阅 SSR/V2ray/X2ray/Vless/Hysteria1/Hysteria2/tuic 等代理节点的链接(非 Clash 订阅链接)填入 url 后单引号中
+    <<: *NodeParam
+    path: './proxy_provider/订阅代理集合1.yaml'                  # 下载到本地的订阅代理集合 yaml 文件路径。
+    filter: ''                # 筛选满足关键词或正则表达式的节点，可以通过 | 分割，使用 ` 区分多个正则表达式
+    exclude-filter: ''        # 排除满足关键词或正则表达式的节点，可以通过 | 分割，使用 ` 区分多个正则表达式。例："高倍|×2|×3|×10"，屏蔽高倍速的节点
+    exclude-type: ''          # 排除满足关键词的节点类型，可以通过 | 分割，不支持正则表达式
+    override:
+      ip-version: ipv4-prefer
+      additional-prefix: ""   # 为代理节点添加指定的名称前缀。例：源名称，序号等
+
+  本地节点1:
+    type: file                # 表示使用本地代理集合 yaml 文件
+    path: ''                  # 调用的本地代理集合 yaml 文件路径。例："./proxy_provider/本地代理集合1.yaml"。文件内容参见 "https://wiki.metacubex.one/config/proxy-providers/content/"
+    filter: ''                # 筛选满足关键词或正则表达式的节点，可以通过 | 分割，使用 ` 区分多个正则表达式
+    exclude-filter: ''        # 排除满足关键词或正则表达式的节点，可以通过 | 分割，使用 ` 区分多个正则表达式。例："高倍|×2|×3|×10"，屏蔽高倍速的节点
+    exclude-type: ''          # 排除满足关键词的节点类型，可以通过 | 分割，不支持正则表达式
+    override:
+      ip-version: ipv4-prefer
+      additional-prefix: ""   # 为代理节点添加指定的名称前缀。例：源名称，序号等
+
+# 代理节点 - 节点详细配置集合，内容为数组
+# proxies:
+# - name: "ss1"                 # 必须，代理名称，不可重复
+#   type: ss                    # 必须，代理节点类型
+#   server: server              # 必须，代理节点服务器 (域名/ip)
+#   port: 443                   # 必须，代理节点端口
+#   cipher: chacha20-ietf-poly1305  # 加密方法
+#   username: ln5rzo0SidvQyaJ   # 节点验证用户名
+#   password: RDeeaWzPtN3F7mB   # 节点验证密码
+
+# 锚点 - 节点筛选组
+FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|港|(?i)HK|(?i)Hong|(\b(HK|Hong)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterTW: &FilterTW '^(?=.*((?i)🇹🇼|台湾|台|(?i)TW|(?i)Tai|(?i)Taiwan|(\b(TW|Tai|Taiwan)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterJP: &FilterJP '^(?=.*((?i)🇯🇵|日本|日|川日|东京|大阪|泉日|埼玉|沪日|深日|(?i)JP|(?i)Japan|(?i)Tokyo|(\b(JP|Japan|Tokyo)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterKR: &FilterKR '^(?=.*((?i)🇰🇷|韩国|韩|韓|首尔|(?i)KR|(?i)KOR|(?i)Korea|(\b(KR|KOR|Korea)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterSG: &FilterSG '^(?=.*((?i)🇸🇬|新加坡|坡|狮|(?i)SG|(?i)Singapore|(\b(SG|Singapore)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterUS: &FilterUS '^(?=.*((?i)🇺🇸|美国|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(?i)US|(?i)States|American|(\b(US|United States)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterUK: &FilterUK '^(?=.*((?i)🇬🇧|英国|英|伦敦|(?:(?!剩余|流量)).*(?i)GB|(?i)UK|(?i)Britain|(?i)eng|(\b(GB|UK|United Kingdom)\b)))(?!.*((?i)回国|校园|游戏|(?i)singbox|🎮|(\b(GAME)\b))).*$'
+FilterFR: &FilterFR '^(?=.*((?i)🇫🇷|法国|法|巴黎|(?i)FRA|(?i)Paris|(\b(FR|France|Paris)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterDE: &FilterDE '^(?=.*((?i)🇩🇪|德国|德|汉堡|(?i)DE|(?i)Germany|(\b(DE|Germany)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterRU: &FilterRU '^(?=.*((?i)🇷🇺|俄罗斯|莫斯科|俄|(?i)RU|(?i)Russian|(?i)Moscow|(\b(RU|Russian|Moscow)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterGame: &FilterGame '^(?=.*((?i)游戏|🎮|(\b(GAME)\b)))(?!.*((?i)回国|校园)).*$'
+FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量(?:(?!剩余))|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内(?:(?!优化))|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|(?!.*剩余)\d+G)))).*$'
+FilterLocal: &FilterLocal '^(?=.*(本地))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量(?:(?!剩余))|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内(?:(?!优化))|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author)\b|(\d{4}-\d{2}-\d{2}|(?!.*剩余)\d+G)))).*$'
+
+# 策略组参数锚点
+# 锚点 - 手选策略时延测试参数 [每 30 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+StrategySelect: &StrategySelect {type: select, interval: 30, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 204}
+# 锚点 - 策略时延优选参数 [每 30 秒一次惰性健康检查，容差 50ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+StrategyUrlTest: &StrategyUrlTest {type: url-test, interval: 30, tolerance: 50, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 204}
+# 锚点 - 策略负载均衡参数 [每 30 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+StrategyLoadBalance: &StrategyLoadBalance {type: load-balance, interval: 30, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 204}
+# 锚点 - 策略故障转移参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+StrategyFallBack: &StrategyFallBack {type: fallback, interval: 6, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 204}
+# 锚点 - 链式代理参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+Relay: &Relay {type: relay, interval: 6, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 204, hidden: true}
+# 锚点 - 节点时延优选参数 [每 6 秒一次惰性健康检查，容差 50ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+UrlTest: &UrlTest {type: url-test, interval: 6, tolerance: 50, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 204, hidden: true, include-all: true}
+# 锚点 - 故障转移参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+FallBack: &FallBack {type: fallback, interval: 6, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 204, hidden: true, include-all: true}
+# 锚点 - 负载均衡参数 [每 6 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, expected-status: 204, hidden: true, include-all: true}
+# 锚点 - Classical 规则订阅参数 [每 3 小时更新一次订阅规则]
+RuleProviders_Classical: &RuleProviders_Classical {type: http, behavior: classical, interval: 10800, format: yaml}
+# 锚点 - Domain 规则订阅参数 [每 3 小时更新一次订阅规则]
+RuleProviders_Domain: &RuleProviders_Domain {type: http, behavior: domain, interval: 10800, format: yaml}
+# 锚点 - IPcidr 规则订阅参数 [每 3 小时更新一次订阅规则]
+RuleProviders_IPcidr: &RuleProviders_IPcidr {type: http, behavior: ipcidr, interval: 10800, format: yaml}
+# 锚点 - Classical 规则订阅参数 [每 3 小时更新一次订阅规则，更新规则时使用直连策略]
+RuleProviders_Classical_DIRECT: &RuleProviders_Classical_DIRECT {type: http, behavior: classical, interval: 10800, format: yaml, proxy: DIRECT}
+# 锚点 - Domain 规则订阅参数 [每 3 小时更新一次订阅规则，更新规则时使用直连策略]
+RuleProviders_Domain_DIRECT: &RuleProviders_Domain_DIRECT {type: http, behavior: domain, interval: 10800, format: yaml, proxy: DIRECT}
+# 锚点 - IPcidr 规则订阅参数 [每 3 小时更新一次订阅规则，更新规则时使用直连策略]
+RuleProviders_IPcidr_DIRECT: &RuleProviders_IPcidr_DIRECT {type: http, behavior: ipcidr, interval: 10800, format: yaml, proxy: DIRECT}
+
+## OpenAI 检测
+# 锚点 - OpenAI Android 自定义 http 请求头
+header_OpenAI: &header_OpenAI {header: {authority: ios.chat.openai.com, accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', accept-language: 'zh-CN,zh;en-US,en;q=0.9', sec-ch-ua: '"Microsoft Edge";v="119", "Chromium";v="119", "Not?A_Brand";v="24"', sec-ch-ua-mobile: '?0', sec-ch-ua-platform: "Windows", sec-fetch-dest: document, sec-fetch-mode: navigate, sec-fetch-site: none, sec-fetch-user: '?1', upgrade-insecure-requests: 1, User-Agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0'}}
+# 锚点 - OpenAI App 端时延优选参数 [每 6 秒一次健康检查，容差 50ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+OpenAI_App_UrlTest: &OpenAI_App_UrlTest {type: url-test, interval: 6, tolerance: 50, lazy: false, url: 'https://ios.chat.openai.com', <<: *header_OpenAI, disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 403, hidden: true, include-all: true}
+# 锚点 - OpenAI App 端故障转移参数 [每 6 秒一次健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+OpenAI_App_FallBack: &OpenAI_App_FallBack {type: fallback, interval: 6, lazy: false, url: 'https://ios.chat.openai.com', <<: *header_OpenAI, disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 403, hidden: true, include-all: true}
+# 锚点 - OpenAI Web 端时延优选参数 [每 6 秒一次健康检查，容差 50ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+OpenAI_Web_UrlTest: &OpenAI_Web_UrlTest {type: url-test, interval: 6, tolerance: 50, lazy: false, url: 'https://chat.openai.com', <<: *header_OpenAI, disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 403, hidden: true, include-all: true}
+# 锚点 - OpenAI Web 端故障转移参数 [每 6 秒一次健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+OpenAI_Web_FallBack: &OpenAI_Web_FallBack {type: fallback, interval: 6, lazy: false, url: 'https://chat.openai.com', <<: *header_OpenAI, disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 403, hidden: true, include-all: true}
+
+## Netfix 检测
+# 锚点 - Netflix 自定义 http 请求头
+header_Netflix: &header_Netflix {header: {host: www.netflix.com, accept-language: 'zh-CN,zh;en-US,en;q=0.9', sec-ch-ua: '"Microsoft Edge";v="119", "Chromium";v="119", "Not?A_Brand";v="24"', sec-ch-ua-mobile: '?0', sec-ch-ua-platform: "Windows", sec-fetch-dest: document, sec-fetch-mode: navigate, sec-fetch-site: none, sec-fetch-user: '?1', User-Agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0'}}
+# 锚点 - Netflix 非自制剧时延优选参数 [每 6 秒一次健康检查，容差 50ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+Netflix_All_UrlTest_Result1: &Netflix_All_UrlTest_Result1 {type: url-test, interval: 6, tolerance: 50, lazy: false, url: 'https://www.netflix.com/title/81280792', <<: *header_Netflix, disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 200, hidden: true, include-all: true}
+Netflix_All_UrlTest_Result2: &Netflix_All_UrlTest_Result2 {type: url-test, interval: 6, tolerance: 50, lazy: false, url: 'https://www.netflix.com/title/70143836', <<: *header_Netflix, disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 200, hidden: true, include-all: true}
+# 锚点 - Netflix 自制剧时延优选参数 [每 6 秒一次健康检查，容差 50ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
+Netflix_Originals_Only_UrlTest_Result1: &Netflix_Originals_Only_UrlTest_Result1 {type: url-test, interval: 6, tolerance: 50, lazy: false, url: 'https://www.netflix.com/title/81280792', <<: *header_Netflix, disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 404, hidden: true, include-all: true}
+Netflix_Originals_Only_UrlTest_Result2: &Netflix_Originals_Only_UrlTest_Result2 {type: url-test, interval: 6, tolerance: 50, lazy: false, url: 'https://www.netflix.com/title/70143836', <<: *header_Netflix, disable-udp: false, timeout: 2000, max-failed-times: 3, expected-status: 404, hidden: true, include-all: true}
+
+# 策略组
+proxy-groups:
+  - {name: 🚀 策略选择, type: select, proxies: [♻️ 自动策略, 🎛 均衡策略, 🚥 故障转移, 🔗 链式策略, 🗺️ 手选地区, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: ♻️ 自动策略, <<: *StrategyUrlTest, proxies: [🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略]}
+  - {name: 🎛 均衡策略, <<: *StrategyLoadBalance, proxies: [🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略]}
+  - {name: 🚥 故障转移, <<: *StrategyFallBack, include-all: true, filter: *FilterAll}
+  - {name: 🔗 链式策略, <<: *StrategySelect, proxies: [🔗 链式代理(手选地区+手选节点①), 🔗 链式代理(手选节点①+手选节点②), 🔗 链式代理(手选地区+故障转移), 🔗 链式代理(自动策略+手选节点①), 🔗 链式代理(均衡策略+手选节点①)]}
+  - {name: 🗺️ 手选地区, type: select, proxies: [🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略]}
+  - {name: 🔑 手选节点①, type: select, include-all: true, filter: *FilterAll}
+  - {name: 🔑 手选节点②, type: select, include-all: true, filter: *FilterAll}
+  - {name: 🛑 广告拦截, type: select, proxies: [REJECT, DIRECT, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 🍃 应用净化, type: select, proxies: [REJECT, DIRECT, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 🎮 游戏平台, type: select, include-all: true, filter: *FilterGame, proxies: [DIRECT, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 📢 谷歌FCM, type: select, proxies: [DIRECT, 🚀 策略选择, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 💫 微信FCM, type: select, proxies: [🚀 策略选择, 🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略, DIRECT]}
+  - {name: 🎥 NetFlix, type: select, proxies: [🎥 Netflix 非自制剧①, 🎥 Netflix 非自制剧②, 🎥 Netflix 自制剧①, 🎥 Netflix 自制剧②, ♻️ 自动策略, 🎛 均衡策略, 🚥 故障转移, 🔗 链式策略, 🗺️ 手选地区, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 💬 OpenAI, type: select, proxies: [💬 OpenAI App, 💬 OpenAI Web, ♻️ 自动策略, 🎛 均衡策略, 🚥 故障转移, 🔗 链式策略, 🗺️ 手选地区, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 💬 AI, type: select, include-all: true, filter: *FilterAll, proxies: [🚀 策略选择, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 📷 TikTok, type: select, include-all: true, filter: *FilterAll, proxies: [🚀 策略选择, 🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: ⏬ 国外下载, type: select, include-all: true, filter: *FilterAll, proxies: [🚀 策略选择, 🔑 手选节点①, 🔑 手选节点②, DIRECT]}
+  - {name: ⏬ 国内下载, type: select, include-all: true, filter: *FilterAll, proxies: [DIRECT, 🚀 策略选择, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 🚩 多国服务, type: select, proxies: [DIRECT, 🚀 策略选择, 🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略]}
+  - {name: 🏳️‍🌈 国外服务, type: select, proxies: [🚀 策略选择, 🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略]}
+  - {name: 🌏 国内媒体, type: select, include-all: true, filter: *FilterAll, proxies: [DIRECT, 🚀 策略选择, 🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 🌍 国外媒体, type: select, include-all: true, filter: *FilterAll, proxies: [🚀 策略选择, 🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略, 🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 🐟 漏网之鱼, type: select, proxies: [🚀 策略选择, 🇭🇰 香港策略, 🇹🇼 台湾策略, 🇯🇵 日本策略, 🇰🇷 韩国策略, 🇸🇬 新加坡策略, 🇺🇸 美国策略, 🇬🇧 英国策略, 🇫🇷 法国策略, 🇩🇪 德国策略, 🇷🇺 俄罗斯策略, DIRECT]}
+
+# 地区策略组
+  - {name: 🇭🇰 香港策略, type: select, proxies: [⏱香港时延优选策略组, 🚥香港故障转移策略组, 🎛香港负载均衡策略组]}
+  - {name: 🇹🇼 台湾策略, type: select, proxies: [⏱台湾时延优选策略组, 🚥台湾故障转移策略组, 🎛台湾负载均衡策略组]}
+  - {name: 🇯🇵 日本策略, type: select, proxies: [⏱日本时延优选策略组, 🚥日本故障转移策略组, 🎛日本负载均衡策略组]}
+  - {name: 🇰🇷 韩国策略, type: select, proxies: [⏱韩国时延优选策略组, 🚥韩国故障转移策略组, 🎛韩国负载均衡策略组]}
+  - {name: 🇸🇬 新加坡策略, type: select, proxies: [⏱新加坡时延优选策略组, 🚥新加坡故障转移策略组, 🎛新加坡负载均衡策略组]}
+  - {name: 🇺🇸 美国策略, type: select, proxies: [⏱美国时延优选策略组, 🚥美国故障转移策略组, 🎛美国负载均衡策略组]}
+  - {name: 🇬🇧 英国策略, type: select, proxies: [⏱英国时延优选策略组, 🚥英国故障转移策略组, 🎛英国负载均衡策略组]}
+  - {name: 🇫🇷 法国策略, type: select, proxies: [⏱法国时延优选策略组, 🚥法国故障转移策略组, 🎛法国负载均衡策略组]}
+  - {name: 🇩🇪 德国策略, type: select, proxies: [⏱德国时延优选策略组, 🚥德国故障转移策略组, 🎛德国负载均衡策略组]}
+  - {name: 🇷🇺 俄罗斯策略, type: select, proxies: [⏱俄罗斯时延优选策略组, 🚥俄罗斯故障转移策略组, 🎛俄罗斯负载均衡策略组]}
+
+# 时延优选策略组
+  - {name: ⏱香港时延优选策略组, <<: *UrlTest, filter: *FilterHK}
+  - {name: ⏱台湾时延优选策略组, <<: *UrlTest, filter: *FilterTW}
+  - {name: ⏱日本时延优选策略组, <<: *UrlTest, filter: *FilterJP}
+  - {name: ⏱韩国时延优选策略组, <<: *UrlTest, filter: *FilterKR}
+  - {name: ⏱新加坡时延优选策略组, <<: *UrlTest, filter: *FilterSG}
+  - {name: ⏱美国时延优选策略组, <<: *UrlTest, filter: *FilterUS}
+  - {name: ⏱英国时延优选策略组, <<: *UrlTest, filter: *FilterUK}
+  - {name: ⏱法国时延优选策略组, <<: *UrlTest, filter: *FilterFR}
+  - {name: ⏱德国时延优选策略组, <<: *UrlTest, filter: *FilterDE}
+  - {name: ⏱俄罗斯时延优选策略组, <<: *UrlTest, filter: *FilterRU}
+
+# 故障转移策略组
+  - {name: 🚥香港故障转移策略组, <<: *FallBack, filter: *FilterHK}
+  - {name: 🚥台湾故障转移策略组, <<: *FallBack, filter: *FilterTW}
+  - {name: 🚥日本故障转移策略组, <<: *FallBack, filter: *FilterJP}
+  - {name: 🚥韩国故障转移策略组, <<: *FallBack, filter: *FilterKR}
+  - {name: 🚥新加坡故障转移策略组, <<: *FallBack, filter: *FilterSG}
+  - {name: 🚥美国故障转移策略组, <<: *FallBack, filter: *FilterUS}
+  - {name: 🚥英国故障转移策略组, <<: *FallBack, filter: *FilterUK}
+  - {name: 🚥法国故障转移策略组, <<: *FallBack, filter: *FilterFR}
+  - {name: 🚥德国故障转移策略组, <<: *FallBack, filter: *FilterDE}
+  - {name: 🚥俄罗斯故障转移策略组, <<: *UrlTest, filter: *FilterRU}
+
+# 负载均衡策略组
+  - {name: 🎛香港负载均衡策略组, <<: *LoadBalance, filter: *FilterHK}
+  - {name: 🎛台湾负载均衡策略组, <<: *LoadBalance, filter: *FilterTW}
+  - {name: 🎛日本负载均衡策略组, <<: *LoadBalance, filter: *FilterJP}
+  - {name: 🎛韩国负载均衡策略组, <<: *LoadBalance, filter: *FilterKR}
+  - {name: 🎛新加坡负载均衡策略组, <<: *LoadBalance, filter: *FilterSG}
+  - {name: 🎛美国负载均衡策略组, <<: *LoadBalance, filter: *FilterUS}
+  - {name: 🎛英国负载均衡策略组, <<: *LoadBalance, filter: *FilterUK}
+  - {name: 🎛法国负载均衡策略组, <<: *LoadBalance, filter: *FilterFR}
+  - {name: 🎛德国负载均衡策略组, <<: *LoadBalance, filter: *FilterDE}
+  - {name: 🎛俄罗斯负载均衡策略组, <<: *LoadBalance, filter: *FilterRU}
+
+# Open AI 时延优选策略组
+  - {name: 💬 OpenAI App, <<: *OpenAI_App_UrlTest, filter: *FilterAll}
+  - {name: 💬 OpenAI Web, <<: *OpenAI_Web_UrlTest, filter: *FilterAll}
+
+# Netflix 非自制剧时延优选策略组
+  - {name: 🎥 Netflix 非自制剧①, <<: *Netflix_All_UrlTest_Result1, filter: *FilterAll}
+  - {name: 🎥 Netflix 非自制剧②, <<: *Netflix_All_UrlTest_Result2, filter: *FilterAll}
+
+# Netflix 自制剧时延优选策略组
+  - {name: 🎥 Netflix 自制剧①, <<: *Netflix_Originals_Only_UrlTest_Result1, filter: *FilterAll}
+  - {name: 🎥 Netflix 自制剧②, <<: *Netflix_Originals_Only_UrlTest_Result2, filter: *FilterAll}
+
+# 链式代理基础策略组
+## 将自建节点的别名依次填入[]中。例：[vmess 节点别名, vless 节点别名] 或 [🎛 均衡策略, trojan 节点别名, tuic 节点别名]等。详细用法参见"https://wiki.metacubex.one/config/proxy-groups/relay/"
+  - {name: 🔗 链式代理(手选地区+手选节点①), <<: *Relay, proxies: [🗺️ 手选地区, 🔑 手选节点①]}
+  - {name: 🔗 链式代理(手选节点①+手选节点②), <<: *Relay, proxies: [🔑 手选节点①, 🔑 手选节点②]}
+  - {name: 🔗 链式代理(手选地区+故障转移), <<: *Relay, proxies: [🗺️ 手选地区, 🚥 故障转移]}
+  - {name: 🔗 链式代理(自动策略+手选节点①), <<: *Relay, proxies: [♻️ 自动策略, 🔑 手选节点①]}
+  - {name: 🔗 链式代理(均衡策略+手选节点①), <<: *Relay, proxies: [🎛 均衡策略, 🔑 手选节点①]}
+
+# 订阅规则
+rule-providers:
+  # 秋风广告规则
+  AWAvenue-Ads-Rule-Clash-classical_TG-Twilight:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash-classical.yaml
+    path: ./rule_provider/rule-provider_AWAvenue-Ads-Rule-Clash-classical_TG-Twilight.yaml
+
+  # anti-AD 广告拦截规则
+  anti-AD:
+    <<: *RuleProviders_Domain
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml
+    path: ./rule_provider/rule-provider_anti-ad-clash.yaml
+  # anti-AD 白名单规则
+  anti-AD-white:
+    <<: *RuleProviders_Domain
+    url: https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml
+    path: ./rule_provider/rule-provider_anti-ad-white-for-clash.yaml
+
+  # lodepuly 规则
+  ## 广告拦截
+  ### 白名单
+  Direct_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/Direct.yaml
+    path: ./rule_provider/rule-provider_Direct_lodepuly.yaml
+
+  ## 通配类
+  ChinaDownloadCDN_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/ChinaDownloadCDN.yaml
+    path: ./rule_provider/rule-provider_ChinaDownloadCDN_lodepuly.yaml
+  Game_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/Game.yaml
+    path: ./rule_provider/rule-provider_Game_lodepuly.yaml
+  InternationalDownloadCDN_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/InternationalDownloadCDN.yaml
+    path: ./rule_provider/rule-provider_InternationalDownloadCDN_lodepuly.yaml
+  # Proxy_lodepuly:
+  #   <<: *RuleProviders_Classical
+  #   url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/Proxy.yaml
+  #   path: ./rule_provider/rule-provider_Proxy_lodepuly.yaml
+
+  ## 服务类
+  AI_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AI.yaml
+    path: ./rule_provider/rule-provider_AI_lodepuly.yaml
+  AppleID_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AppleID.yaml
+    path: ./rule_provider/rule-provider_AppleID_lodepuly.yaml
+  ApplePushNotificationService_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/ApplePushNotificationService.yaml
+    path: ./rule_provider/rule-provider_ApplePushNotificationService_lodepuly.yaml
+  AppleSoftwareUpdates_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AppleSoftwareUpdates.yaml
+    path: ./rule_provider/rule-provider_AppleSoftwareUpdates_lodepuly.yaml
+  AppStore_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AppStore.yaml
+    path: ./rule_provider/rule-provider_AppStore_lodepuly.yaml
+  ESET_China_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/ESET_China.yaml
+    path: ./rule_provider/rule-provider_ESET_China_lodepuly.yaml
+  Emby_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/EmbyServer.yaml
+    path: ./rule_provider/rule-provider_Emby_lodepuly.yaml
+  iCloudChina_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/iCloudChina.yaml
+    path: ./rule_provider/rule-provider_iCloudChina_lodepuly.yaml
+  TikTok_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/TikTok.yaml
+    path: ./rule_provider/rule-provider_TikTok_lodepuly.yaml
+  Telegram_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/Telegram.yaml
+    path: ./rule_provider/rule-provider_Telegram_lodepuly.yaml
+  1PasswordUS_lodepuly:
+    <<: *RuleProviders_Classical
+    url: https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/1PasswordUS.yaml
+    path: ./rule_provider/rule-provider_1PasswordUS_lodepuly.yaml
+
+  # ACL4SSR 规则
+  ## 广告拦截
+  ### 白名单
+  # UnBan_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/UnBan.yaml
+  #   path: ./rule_provider/rule-provider_UnBan_ACL4SSR.yaml
+
+  ### 拦截广告
+  # BanAD_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanAD.yaml
+  #   path: ./rule_provider/rule-provider_BanAD_ACL4SSR.yaml
+  # BanEasyList_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanEasyList.yaml
+  #   path: ./rule_provider/rule-provider_BanEasyList_ACL4SSR.yaml
+  # BanEasyListChina_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanEasyListChina.yaml
+  #   path: ./rule_provider/rule-provider_BanEasyListChina_ACL4SSR.yaml
+  # BanEasyPrivacy_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanEasyPrivacy.yaml
+  #   path: ./rule_provider/rule-provider_BanEasyPrivacy_ACL4SSR.yaml
+
+  ## 应用净化
+  BanProgramAD_ACL4SSR:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/BanProgramAD.yaml
+    path: ./rule_provider/rule-provider_BanProgramAD_ACL4SSR.yaml
+
+  ## 通配类
+  # ChinaCompanyIp_ACL4SSR:
+  #   <<: *RuleProviders_IPcidr
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ChinaCompanyIp.yaml
+  #   path: ./rule_provider/rule-provider_ChinaCompanyIp_ACL4SSR.yaml
+  # ChinaDomain_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ChinaDomain.yaml
+  #   path: ./rule_provider/rule-provider_ChinaDomain_ACL4SSR.yaml
+  # ChinaMedia_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ChinaMedia.yaml
+  #   path: ./rule_provider/rule-provider_ChinaMedia_ACL4SSR.yaml
+  # Download_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Download.yaml
+  #   path: ./rule_provider/rule-provider_Download_ACL4SSR.yaml
+  # LocalAreaNetwork_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/LocalAreaNetwork.yaml
+  #   path: ./rule_provider/rule-provider_LocalAreaNetwork_ACL4SSR.yaml
+  # ProxyMedia_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ProxyMedia.yaml
+  #   path: ./rule_provider/rule-provider_ProxyMedia_ACL4SSR.yaml
+  # ProxyGFWlist_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/ProxyGFWlist.yaml
+  #   path: ./rule_provider/rule-provider_ProxyGFWlist_ACL4SSR.yaml
+
+  ## 服务类
+  # Apple_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Apple.yaml
+  #   path: ./rule_provider/rule-provider_Apple_ACL4SSR.yaml
+  # Bahamut_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Bahamut.yaml
+  #   path: ./rule_provider/rule-provider_Bahamut_ACL4SSR.yaml
+  # BilibiliHMT_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/BilibiliHMT.yaml
+  #   path: ./rule_provider/rule-provider_BilibiliHMT_ACL4SSR.yaml
+  # Bilibili_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Bilibili.yaml
+  #   path: ./rule_provider/rule-provider_Bilibili_ACL4SSR.yaml
+  # Epic_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Epic.yaml
+  #   path: ./rule_provider/rule-provider_Epic_ACL4SSR.yaml
+  # GoogleCN_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/GoogleCN.yaml
+  #   path: ./rule_provider/rule-provider_GoogleCN_ACL4SSR.yaml
+  # GoogleFCM_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/GoogleFCM.yaml
+  #   path: ./rule_provider/rule-provider_GoogleFCM_ACL4SSR.yaml
+  # Microsoft_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Microsoft.yaml
+  #   path: ./rule_provider/rule-provider_Microsoft_ACL4SSR.yaml
+  # OneDrive_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/OneDrive.yaml
+  #   path: ./rule_provider/rule-provider_OneDrive_ACL4SSR.yaml
+  # OpenAi_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/OpenAi.yaml
+  #   path: ./rule_provider/rule-provider_OpenAi_ACL4SSR.yaml
+  # SteamCN_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/SteamCN.yaml
+  #   path: ./rule_provider/rule-provider_SteamCN_ACL4SSR.yaml
+  # Telegram_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Telegram.yaml
+  #   path: ./rule_provider/rule-provider_Telegram_ACL4SSR.yaml
+  # NetEaseMusic_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/NetEaseMusic.yaml
+  #   path: ./rule_provider/rule-provider_NetEaseMusic_ACL4SSR.yaml
+  # Netflix_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Netflix.yaml
+  #   path: ./rule_provider/rule-provider_Netflix_ACL4SSR.yaml
+  # Nintendo_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Nintendo.yaml
+  #   path: ./rule_provider/rule-provider_Nintendo_ACL4SSR.yaml
+  # Origin_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Origin.yaml
+  #   path: ./rule_provider/rule-provider_Origin_ACL4SSR.yaml
+  # Sony_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Sony.yaml
+  #   path: ./rule_provider/rule-provider_Sony_ACL4SSR.yaml
+  # Steam_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Steam.yaml
+  #   path: ./rule_provider/rule-provider_Steam_ACL4SSR.yaml
+  # Twitter_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/Twitter.yaml
+  #   path: ./rule_provider/rule-provider_Twitter_ACL4SSR.yaml
+  # YouTube_ACL4SSR:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Providers/Ruleset/YouTube.yaml
+  #   path: ./rule_provider/rule-provider_YouTube_ACL4SSR.yaml
+
+  # Loyalsoldier 规则
+  ## 广告拦截
+  ### 白名单
+  # direct_Loyalsoldier:
+  #   <<: *RuleProviders_Domain
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/direct.txt
+  #   path: ./rule_provider/rule-provider_direct_Loyalsoldier.yaml
+  ### 拦截广告
+  reject_Loyalsoldier:
+    <<: *RuleProviders_Domain
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt
+    path: ./rule_provider/rule-provider_reject_Loyalsoldier.yaml
+
+  ## 通配类
+  applications_Loyalsoldier:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/applications.txt
+    path: ./rule_provider/rule-provider_applications_Loyalsoldier.yaml
+  lancidr_Loyalsoldier:
+    <<: *RuleProviders_IPcidr
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/lancidr.txt
+    path: ./rule_provider/rule-provider_lancidr_Loyalsoldier.yaml
+  cncidr_Loyalsoldier:
+    <<: *RuleProviders_IPcidr
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cncidr.txt
+    path: ./rule_provider/rule-provider_cncidr_Loyalsoldier.yaml
+  # greatfire_Loyalsoldier:
+  #   <<: *RuleProviders_Domain
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/greatfire.txt
+  #   path: ./rule_provider/rule-provider_greatfire_Loyalsoldier.yaml
+  # gfw_Loyalsoldier:
+  #   <<: *RuleProviders_Domain
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/gfw.txt
+  #   path: ./rule_provider/rule-provider_gfw_Loyalsoldier.yaml
+  private_Loyalsoldier:
+    <<: *RuleProviders_Domain
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/private.txt
+    path: ./rule_provider/rule-provider_private_Loyalsoldier.yaml
+  # proxy_Loyalsoldier:
+  #   <<: *RuleProviders_Domain
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/proxy.txt
+  #   path: ./rule_provider/rule-provider_proxy_Loyalsoldier.yaml
+  # tld-not-cn_Loyalsoldier:
+  #   <<: *RuleProviders_Domain
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/tld-not-cn.txt
+  #   path: ./rule_provider/rule-provider_tld-not-cn_Loyalsoldier.yaml
+
+  ## 服务类
+  # apple_Loyalsoldier:
+  #   <<: *RuleProviders_Domain
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/apple.txt
+  #   path: ./rule_provider/rule-provider_apple_Loyalsoldier.yaml
+  # google_Loyalsoldier:
+  #   <<: *RuleProviders_Domain
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/google.txt
+  #   path: ./rule_provider/rule-provider_google_Loyalsoldier.yaml
+  # icloud_Loyalsoldier:
+  #   <<: *RuleProviders_Domain
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/icloud.txt
+  #   path: ./rule_provider/rule-provider_icloud_Loyalsoldier.yaml
+  telegramcidr_Loyalsoldier:
+    <<: *RuleProviders_IPcidr
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/telegramcidr.txt
+    path: ./rule_provider/rule-provider_telegramcidr_Loyalsoldier.yaml
+
+  # blackmatrix7 规则
+  ## 广告拦截
+  ### 直连(广告白名单)
+  Direct_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.yaml
+    path: ./rule_provider/rule-provider_Direct_blackmatrix7.yaml
+  ### 拦截广告
+  Advertising_Classical_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml
+    path: ./rule_provider/rule-provider_Advertising_Classical_blackmatrix7.yaml
+  ### 知乎广告拦截
+  ZhihuAds_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ZhihuAds/ZhihuAds.yaml
+    path: ./rule_provider/rule-provider_ZhihuAds_blackmatrix7.yaml
+  ### 小米电视去广告
+  AdvertisingMiTV_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingMiTV/AdvertisingMiTV.yaml
+    path: ./rule_provider/rule-provider_AdvertisingMiTV_blackmatrix7.yaml
+  ### 反劫持
+  Hijacking_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Hijacking/Hijacking.yaml
+    path: ./rule_provider/rule-provider_Hijacking_blackmatrix7.yaml
+  ### 隐私保护
+  Privacy_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Privacy/Privacy.yaml
+    path: ./rule_provider/rule-provider_Privacy_blackmatrix7.yaml
+  ### AdBlock Plus EasyPrivacy，仅抽取DOMAIN-SUFFIX类型。
+  EasyPrivacy_Classical_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EasyPrivacy/EasyPrivacy_Classical.yaml
+    path: ./rule_provider/rule-provider_EasyPrivacy_Classical_blackmatrix7.yaml
+  ### BlockHttpDNS
+  BlockHttpDNS_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BlockHttpDNS/BlockHttpDNS.yaml
+    path: ./rule_provider/rule-provider_BlockHttpDNS_blackmatrix7.yaml
+  ### AdGuardSDNSFilter。 实验性规则！！谨慎评估后使用！！搭配 AdGuardSDNSFilter_Direct_blackmatrix7 进行放行！！
+  AdGuardSDNSFilter_Classical_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdGuardSDNSFilter/AdGuardSDNSFilter_Classical.yaml
+    path: ./rule_provider/rule-provider_AdGuardSDNSFilter_Classical_blackmatrix7.yaml
+  ### AdGuardS DNS Filter Direct
+  AdGuardSDNSFilter_Direct_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.yaml
+    path: ./rule_provider/rule-provider_AdGuardSDNSFilter_Direct_blackmatrix7.yaml
+
+  ## 通配类
+  Lan_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan.yaml
+    path: ./rule_provider/rule-provider_Lan_blackmatrix7.yaml
+  ChinaMax_Classical_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml
+    path: ./rule_provider/rule-provider_ChinaMax_Classical_blackmatrix7.yaml
+  ChinaMedia_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia.yaml
+    path: ./rule_provider/rule-provider_ChinaMedia_blackmatrix7.yaml
+  Download_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.yaml
+    path: ./rule_provider/rule-provider_Download_blackmatrix7.yaml
+  Game_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game.yaml
+    path: ./rule_provider/rule-provider_Game_blackmatrix7.yaml
+  GameDownload_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/GameDownload/GameDownload.yaml
+    path: ./rule_provider/rule-provider_GameDownload_blackmatrix7.yaml
+  GameDownloadCN_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/GameDownloadCN/GameDownloadCN.yaml
+    path: ./rule_provider/rule-provider_GameDownloadCN_blackmatrix7.yaml
+  # Global_Classical_blackmatrix7:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global_Classical.yaml
+  #   path: ./rule_provider/rule-provider_Global_Classical_blackmatrix7.yaml
+  GlobalMedia_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml
+    path: ./rule_provider/rule-provider_GlobalMedia_blackmatrix7.yaml
+  # PrivateTracker_blackmatrix7:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker.yaml
+  #   path: ./rule_provider/rule-provider_PrivateTracker_blackmatrix7.yaml
+  # Proxy_Classical_blackmatrix7:
+  #   <<: *RuleProviders_Classical
+  #   url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Proxy/Proxy_Classical.yaml
+  #   path: ./rule_provider/rule-provider_Proxy_Classical_blackmatrix7.yaml
+
+  ## 服务类
+  Apple_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Apple/Apple.yaml
+    path: ./rule_provider/rule-provider_Apple_blackmatrix7.yaml
+  AppleID_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleID/AppleID.yaml
+    path: ./rule_provider/rule-provider_AppleID_blackmatrix7.yaml
+  AppStore_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppStore/AppStore.yaml
+    path: ./rule_provider/rule-provider_AppStore_blackmatrix7.yaml
+  Bahamut_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut.yaml
+    path: ./rule_provider/rule-provider_Bahamut_blackmatrix7.yaml
+  Copilot_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Copilot/Copilot.yaml
+    path: ./rule_provider/rule-provider_Copilot_blackmatrix7.yaml
+  BiliBili_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili.yaml
+    path: ./rule_provider/rule-provider_BiliBili_blackmatrix7.yaml
+  Bing_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bing/Bing.yaml
+    path: ./rule_provider/rule-provider_Bing_blackmatrix7.yaml
+  Blizzard_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Blizzard/Blizzard.yaml
+    path: ./rule_provider/rule-provider_Blizzard_blackmatrix7.yaml
+  Disney_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney.yaml
+    path: ./rule_provider/rule-provider_Disney_blackmatrix7.yaml
+  EA_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EA/EA.yaml
+    path: ./rule_provider/rule-provider_EA_blackmatrix7.yaml
+  Emby_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby.yaml
+    path: ./rule_provider/rule-provider_Emby_blackmatrix7.yaml
+  Epic_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.yaml
+    path: ./rule_provider/rule-provider_Epic_blackmatrix7.yaml
+  GitHub_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.yaml
+    path: ./rule_provider/rule-provider_GitHub_blackmatrix7.yaml
+  Google_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google.yaml
+    path: ./rule_provider/rule-provider_Google_blackmatrix7.yaml
+  GoogleFCM_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleFCM/GoogleFCM.yaml
+    path: ./rule_provider/rule-provider_GoogleFCM_blackmatrix7.yaml
+  HBO_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/HBO/HBO.yaml
+    path: ./rule_provider/rule-provider_HBO_blackmatrix7.yaml
+  # OneDrive_blackmatrix7:
+  #   <<: *RuleProviders_Classical
+  #   url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OneDrive/OneDrive.yaml
+  #   path: ./rule_provider/rule-provider_OneDrive_blackmatrix7.yaml
+  Microsoft_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft.yaml
+    path: ./rule_provider/rule-provider_Microsoft_blackmatrix7.yaml
+  Netflix_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix.yaml
+    path: ./rule_provider/rule-provider_Netflix_blackmatrix7.yaml
+  NetEaseMusic_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/NetEaseMusic/NetEaseMusic.yaml
+    path: ./rule_provider/rule-provider_NetEaseMusic_blackmatrix7.yaml
+  Nintendo_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.yaml
+    path: ./rule_provider/rule-provider_Nintendo_blackmatrix7.yaml
+  OpenAI_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.yaml
+    path: ./rule_provider/rule-provider_OpenAI_blackmatrix7.yaml
+  Origin_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Origin/Origin.yaml
+    path: ./rule_provider/rule-provider_Origin_blackmatrix7.yaml
+  Samsung_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Samsung/Samsung.yaml
+    path: ./rule_provider/rule-provider_Samsung_blackmatrix7.yaml
+  Sony_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Sony/Sony.yaml
+    path: ./rule_provider/rule-provider_Sony_blackmatrix7.yaml
+  Spotify_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Spotify/Spotify.yaml
+    path: ./rule_provider/rule-provider_Spotify_blackmatrix7.yaml
+  SteamCN_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/SteamCN/SteamCN.yaml
+    path: ./rule_provider/rule-provider_SteamCN_blackmatrix7.yaml
+  Telegram_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram.yaml
+    path: ./rule_provider/rule-provider_Telegram_blackmatrix7.yaml
+  TestFlight_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TestFlight/TestFlight.yaml
+    path: ./rule_provider/rule-provider_TestFlight_blackmatrix7.yaml
+  TikTok_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TikTok/TikTok.yaml
+    path: ./rule_provider/rule-provider_TikTok_blackmatrix7.yaml
+  Twitter_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.yaml
+    path: ./rule_provider/rule-provider_Twitter_blackmatrix7.yaml
+  UBI_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/UBI/UBI.yaml
+    path: ./rule_provider/rule-provider_UBI_blackmatrix7.yaml
+  WeChat_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/WeChat/WeChat.yaml
+    path: ./rule_provider/rule-provider_WeChat_blackmatrix7.yaml
+  YouTube_blackmatrix7:
+    <<: *RuleProviders_Classical
+    url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube.yaml
+    path: ./rule_provider/rule-provider_YouTube_blackmatrix7.yaml
+
+# 路由规则
+# MetaCubeX：https://wiki.metacubex.one/config/rules/
+rules:
+  # Google FCM
+  - OR,((GEOSITE,googlefcm),(RULE-SET,GoogleFCM_blackmatrix7)), 📢 谷歌FCM # Google FCM 推送
+  # - RULE-SET, GoogleFCM_ACL4SSR, 📢 谷歌FCM # Google FCM 推送
+
+  # 微信 - Google FCM
+  - DOMAIN-REGEX, .*(extshort|long)\.weixin\.qq\.com, 💫 微信FCM # 微信 Google FCM
+  - DOMAIN-REGEX, ^(?:(?!ext)(.*short)|(.+long))\.weixin\.qq\.com, DIRECT # 微信消息
+
+  # Google Play 版 Outlook - Google FCM
+  - AND,((PROCESS-NAME,com.microsoft.office.outlook),(OR,((DST-PORT,443)))), 🏳️‍🌈 国外服务 # Outlook Google FCM
+
+  ## 屏蔽国外 QUIC UDP 443 端口。因 QOS 原因降速或不稳定
+  # 若需禁用 QUIC 请取消注释 QUIC 两条规则
+  # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
+  # - AND,(AND,(DST-PORT,443),(NETWORK,UDP),(OR,((NOT,((GEOSITE,cn))),(NOT,((GEOIP,CN))),(GEOSITE,geolocation-!cn)))), REJECT # QUIC
+
+  ## 应用程序白名单
+  - RULE-SET, applications_Loyalsoldier, DIRECT
+
+  ## 私有网络专用域名白名单
+  - GEOIP, private, DIRECT, no-resolve
+  - GEOSITE, private, DIRECT
+  - RULE-SET, private_Loyalsoldier, DIRECT
+
+  ## 拦截广告
+  ### GeoSite 拦截广告。轻量型
+  - GEOSITE, category-ads-all, 🛑 广告拦截
+  ### 秋风。中量型
+  - RULE-SET, AWAvenue-Ads-Rule-Clash-classical_TG-Twilight, 🛑 广告拦截
+  ### blackmatrix7 反劫持 + 隐私保护 + AdBlock Plus EasyPrivacy + BlockHttpDNS。轻量型
+  - AND,((RULE-SET,Hijacking_blackmatrix7),(RULE-SET,Privacy_blackmatrix7),(RULE-SET,EasyPrivacy_Classical_blackmatrix7),(RULE-SET,BlockHttpDNS_blackmatrix7)), 🛑 广告拦截
+  ### blackmatrix7 拦截广告：知乎 + 小米电视。轻量型
+  - AND,((RULE-SET,ZhihuAds_blackmatrix7),(RULE-SET,AdvertisingMiTV_blackmatrix7)), 🛑 广告拦截
+  ### anti-AD 拦截广告。重量型。搭配 anti-AD-white 进行放行
+  - AND,((RULE-SET,anti-AD),(NOT,((RULE-SET,anti-AD-white)))), 🛑 广告拦截
+  ### blackmatrix7 拦截广告。重量型。累加前述放行规则
+  - AND,((RULE-SET,Advertising_Classical_blackmatrix7),(NOT,((RULE-SET,Direct_blackmatrix7))),(NOT,((RULE-SET,anti-AD-white)))), 🛑 广告拦截
+  ### blackmatrix7 拦截广告：AdGuardSDNSFilter。 重量型。实验性规则！！谨慎评估后使用！！搭配 AdGuardSDNSFilter_Direct_blackmatrix7 进行放行！！
+  # - AND,((RULE-SET,AdGuardSDNSFilter_Classical_blackmatrix7),(NOT,((RULE-SET,AdGuardSDNSFilter_Direct_blackmatrix7))),(NOT,((RULE-SET,anti-AD-white)))), 🛑 广告拦截
+  ### Loyalsoldier 拦截广告。重量型。累加前述放行规则
+  # - AND,((RULE-SET,reject_Loyalsoldier),(NOT,((RULE-SET,Direct_blackmatrix7))),(NOT,((RULE-SET,AdGuardSDNSFilter_Direct_blackmatrix7))),(NOT,((RULE-SET,anti-AD-white)))), 🛑 广告拦截
+  ### 其他自定义拦截广告
+  - OR,((DOMAIN-SUFFIX,appmetrica.yandex.ru)(DOMAIN-SUFFIX,getsentry.com),(DOMAIN-SUFFIX,sentry-cdn.com)), 🛑 广告拦截
+  
+  ## 应用净化
+  - RULE-SET, BanProgramAD_ACL4SSR, 🍃 应用净化
+
+  ### OpenAI 反跟踪
+  - DOMAIN-SUFFIX, o33249.ingest.sentry.io, REJECT
+  - DOMAIN-SUFFIX, openaicom.imgix.net, REJECT
+
+  ## 局域网、局域网 IP 及保留 IP 地址列表
+  - RULE-SET, Lan_blackmatrix7, DIRECT
+  - RULE-SET, lancidr_Loyalsoldier, DIRECT, no-resolve
+  # - RULE-SET, LocalAreaNetwork_ACL4SSR, DIRECT
+
+  ## PT & BT Tracker 白名单
+  - GEOSITE, tracker, DIRECT # PT & BT 。MetaCubeX 增强版 GeoSite 已合并 TrackersList [https://trackerslist.com/#/zh] 以及 blackmatrix7/ios_rule_script/PrivateTracker
+  - GEOSITE, category-pt, DIRECT # PT
+  - GEOSITE, category-public-tracker, DIRECT # BT
+
+  ## 常用规则
+  ### 用法地址：
+  ### 原版 GeoIP
+  ### https://github.com/v2fly/geoip/tree/release/text
+  ### 原版 GeoSite
+  ### https://github.com/v2fly/domain-list-community/tree/master/data
+
+  ### Loyalsoldier 增强版 GeoIP
+  ### https://github.com/Loyalsoldier/geoip
+  ### Loyalsoldier 增强版 GeoSite
+  ### https://github.com/Loyalsoldier/v2ray-rules-dat
+
+  ### MetaCubeX 增强版 GeoIP。【适用于本模板】
+  ### https://github.com/MetaCubeX/meta-rules-dat/blob/meta/geo/geoip
+  ### MetaCubeX 增强版 GeoSite【适用于本模板】
+  ### https://github.com/MetaCubeX/meta-rules-dat/tree/meta/geo/geosite
+
+  # 微信
+  - RULE-SET, WeChat_blackmatrix7, DIRECT # 微信
+  - IP-CIDR, 43.130.194.0/23, DIRECT, no-resolve # 微信
+  - IP-CIDR, 43.156.192.0/18, DIRECT, no-resolve # 微信
+  - IP-CIDR, 43.157.69.0/18, DIRECT, no-resolve # 微信
+  - PROCESS-NAME, com.tencent.mm, DIRECT # Android 微信
+
+  - GEOSITE, alibaba, DIRECT # 阿里巴巴。淘宝、支付宝等
+  - GEOSITE, baidu, DIRECT # 百度。贴吧、文库等
+  # - GEOSITE, bytedance, DIRECT # 字节跳动。启动后会导致海外版 TikTok跟抖音一起直连
+  - GEOSITE, douban, DIRECT # 豆瓣
+  - GEOSITE, iqiyi, DIRECT # 爱奇艺
+  - GEOSITE, jd, DIRECT # 京东
+  - GEOSITE, meituan, DIRECT # 美团
+  - GEOSITE, netease, DIRECT # 网易
+  - GEOSITE, pinduoduo, DIRECT # 拼多多
+  - GEOSITE, sina, DIRECT # 新浪
+  - GEOSITE, smzdm, DIRECT # 什么值得买
+  - GEOSITE, sogou, DIRECT # 搜狗
+  - GEOSITE, tencent, DIRECT # 腾讯
+  - GEOSITE, youku, DIRECT # 优酷
+  - GEOSITE, 51job, DIRECT # 前程无忧
+  - GEOSITE, category-bank-cn, DIRECT # 国内银行
+  - GEOSITE, category-enterprise-query-platform-cn, DIRECT # 经济查询
+  - GEOSITE, category-game-accelerator-cn, DIRECT # 游戏加速器
+  - GEOSITE, category-media-cn, DIRECT # 传媒
+  - GEOSITE, category-netdisk-cn, DIRECT # 国内网盘
+  - GEOSITE, category-social-media-cn, DIRECT # 社交媒体
+
+  ## 拦截广告白名单
+  # - AND,((RULE-SET,anti-AD-white),(RULE-SET,Direct_blackmatrix7),(RULE-SET,AdGuardSDNSFilter_Direct_blackmatrix7),(RULE-SET,UnBan_ACL4SSR),(RULE-SET,Direct_lodepuly)), DIRECT
+  - AND,((RULE-SET,anti-AD-white),(RULE-SET,Direct_blackmatrix7),(RULE-SET,AdGuardSDNSFilter_Direct_blackmatrix7),(RULE-SET,Direct_lodepuly)), DIRECT
+
+  ## GeoSite 数据库规则
+  - GEOSITE, openai, 💬 OpenAI
+  - GEOSITE, netflix, 🎥 NetFlix
+  - GEOSITE, tiktok, 📷 TikTok
+  - GEOSITE, apple@cn, 🚩 多国服务
+  - GEOSITE, apple-cn, 🚩 多国服务
+  - AND,((GEOSITE,bing),(NOT,((RULE-SET,Copilot_blackmatrix7)))), 🚩 多国服务
+  - GEOSITE, category-ntp, 🚩 多国服务
+  - GEOSITE, google-cn, 🚩 多国服务
+  - GEOSITE, microsoft@cn, 🚩 多国服务
+  - GEOSITE, onedrive, 🚩 多国服务
+  # - GEOSITE, ookla-speedtest, 🚩 多国服务
+  - GEOSITE, samsung@cn, 🚩 多国服务
+  - GEOSITE, category-companies@cn, 🚩 多国服务 # 国际公司的中国域名
+  - GEOSITE, category-enhance-gaming@cn, 🚩 多国服务 # 国际游戏平台增强
+  - GEOSITE, epicgames, 🎮 游戏平台
+  - GEOSITE, nintendo, 🎮 游戏平台
+  - GEOSITE, origin, 🎮 游戏平台
+  - GEOSITE, sony, 🎮 游戏平台
+  - GEOSITE, steam@cn, 🎮 游戏平台
+  - GEOSITE, tencent-games, 🎮 游戏平台
+  - GEOSITE, category-entertainment@cn, 🎮 游戏平台
+  - GEOSITE, category-games@cn, 🎮 游戏平台
+  - GEOSITE, biliintl,  🏳️‍🌈 国外服务
+  - GEOSITE, facebook, 🏳️‍🌈 国外服务
+  - GEOSITE, github, 🏳️‍🌈 国外服务
+  - GEOSITE, google, 🏳️‍🌈 国外服务
+  - GEOSITE, pixiv, 🏳️‍🌈 国外服务
+  - GEOSITE, telegram, 🏳️‍🌈 国外服务
+  - GEOSITE, twitter, 🏳️‍🌈 国外服务
+  - GEOSITE, category-communication, 🏳️‍🌈 国外服务 # 即时通讯
+  - GEOSITE, category-scholar-!cn, 🏳️‍🌈 国外服务 # 学术
+  - GEOSITE, category-social-media-!cn, 🏳️‍🌈 国外服务 # 社交媒体
+  # - GEOSITE, proxy, 🏳️‍🌈 国外服务
+  - GEOSITE, bahamut, 🌍 国外媒体
+  - GEOSITE, disney, 🌍 国外媒体
+  - GEOSITE, hbo, 🌍 国外媒体
+  - GEOSITE, spotify, 🌍 国外媒体
+  - GEOSITE, youtube, 🌍 国外媒体
+  - GEOSITE, category-porn, 🌍 国外媒体
+  # - GEOSITE, proxymedia, 🌍 国外媒体
+  - GEOSITE, category-media, 🌍 国外媒体 # 传媒
+
+  ## GeoIP 数据库规则 (仅支持增强版数据库文件)
+  - GEOIP, netflix, 🎥 NetFlix, no-resolve
+  - GEOIP, google, 🏳️‍🌈 国外服务, no-resolve
+  - GEOIP, telegram, 🏳️‍🌈 国外服务, no-resolve
+  - GEOIP, twitter, 🏳️‍🌈 国外服务, no-resolve
+
+  ## 一般规则
+  - RULE-SET, Copilot_blackmatrix7,💬 AI
+  - RULE-SET, OpenAI_blackmatrix7, 💬 OpenAI
+  # - RULE-SET, OpenAi_ACL4SSR, 💬 OpenAI
+  - RULE-SET, AI_lodepuly, 💬 AI
+  - RULE-SET, ChinaDownloadCDN_lodepuly, ⏬ 国内下载
+  - RULE-SET, Download_blackmatrix7, ⏬ 国内下载
+  # - RULE-SET, Download_ACL4SSR, ⏬ 国内下载
+  # - RULE-SET, PrivateTracker_blackmatrix7, ⏬ 国内下载 # 已合并至 MetaCubeX 增强版 GeoSite
+  - RULE-SET, InternationalDownloadCDN_lodepuly, ⏬ 国外下载
+  - RULE-SET, Netflix_blackmatrix7, 🎥 NetFlix
+  # - RULE-SET, Netflix_ACL4SSR, 🎥 NetFlix
+  - RULE-SET, TikTok_lodepuly, 📷 TikTok
+  - RULE-SET, TikTok_blackmatrix7, 📷 TikTok
+  - RULE-SET, AppleID_lodepuly, 🚩 多国服务
+  - RULE-SET, AppleID_blackmatrix7, 🚩 多国服务
+  - RULE-SET, ApplePushNotificationService_lodepuly, 🚩 多国服务
+  - RULE-SET, AppleSoftwareUpdates_lodepuly, 🚩 多国服务
+  - RULE-SET, AppStore_lodepuly, 🚩 多国服务
+  - RULE-SET, AppStore_blackmatrix7, 🚩 多国服务
+  # - RULE-SET, apple_Loyalsoldier, 🚩 多国服务
+  - RULE-SET, Apple_blackmatrix7, 🚩 多国服务
+  # - RULE-SET, Apple_ACL4SSR, 🚩 多国服务
+  - RULE-SET, Bing_blackmatrix7, 🚩 多国服务
+  - RULE-SET, Emby_lodepuly, 🚩 多国服务
+  - RULE-SET, Emby_blackmatrix7, 🚩 多国服务
+  - RULE-SET, ESET_China_lodepuly, 🚩 多国服务
+  # - RULE-SET, OneDrive_blackmatrix7, 🚩 多国服务 # 已合并至 MetaCubeX 增强版 GeoSite
+  # - RULE-SET, OneDrive_ACL4SSR, 🚩 多国服务
+  - RULE-SET, iCloudChina_lodepuly, 🚩 多国服务
+  # - RULE-SET, icloud_Loyalsoldier, 🚩 多国服务
+  - RULE-SET, Microsoft_blackmatrix7, 🚩 多国服务
+  # - RULE-SET, Microsoft_ACL4SSR, 🚩 多国服务
+  - RULE-SET, Samsung_blackmatrix7, 🚩 多国服务
+  - RULE-SET, TestFlight_blackmatrix7, 🚩 多国服务
+  - RULE-SET, 1PasswordUS_lodepuly, 🚩 多国服务
+  - RULE-SET, Blizzard_blackmatrix7, 🎮 游戏平台
+  - RULE-SET, EA_blackmatrix7, 🎮 游戏平台
+  - RULE-SET, Epic_blackmatrix7, 🎮 游戏平台
+  # - RULE-SET, Epic_ACL4SSR, 🎮 游戏平台
+  - RULE-SET, Nintendo_blackmatrix7, 🎮 游戏平台
+  # - RULE-SET, Nintendo_ACL4SSR, 🎮 游戏平台
+  - RULE-SET, Origin_blackmatrix7, 🎮 游戏平台
+  # - RULE-SET, Origin_ACL4SSR, 🎮 游戏平台
+  - RULE-SET, Sony_blackmatrix7, 🎮 游戏平台
+  # - RULE-SET, Sony_ACL4SSR, 🎮 游戏平台
+  - RULE-SET, SteamCN_blackmatrix7, 🎮 游戏平台
+  # - RULE-SET, SteamCN_ACL4SSR, 🎮 游戏平台
+  - RULE-SET, UBI_blackmatrix7, 🎮 游戏平台
+  - RULE-SET, Game_lodepuly, 🎮 游戏平台
+  - RULE-SET, Game_blackmatrix7, 🎮 游戏平台
+  - RULE-SET, GameDownloadCN_blackmatrix7, ⏬ 国内下载
+  - RULE-SET, GameDownload_blackmatrix7, ⏬ 国外下载
+  - RULE-SET, Google_blackmatrix7, 🏳️‍🌈 国外服务
+  # - RULE-SET, GoogleCN_ACL4SSR, 🏳️‍🌈 国外服务
+  # - RULE-SET, google_Loyalsoldier, 🏳️‍🌈 国外服务
+  - RULE-SET, GitHub_blackmatrix7, 🏳️‍🌈 国外服务
+  - RULE-SET, telegramcidr_Loyalsoldier, 🏳️‍🌈 国外服务,no-resolve
+  - RULE-SET, Telegram_lodepuly, 🏳️‍🌈 国外服务
+  - RULE-SET, Telegram_blackmatrix7, 🏳️‍🌈 国外服务
+  # - RULE-SET, Telegram_ACL4SSR, 🏳️‍🌈 国外服务
+  - RULE-SET, Twitter_blackmatrix7, 🏳️‍🌈 国外服务
+  # - RULE-SET, Twitter_ACL4SSR, 🏳️‍🌈 国外服务
+  - RULE-SET, Bahamut_blackmatrix7, 🌍 国外媒体
+  # - RULE-SET, Bahamut_ACL4SSR, 🌍 国外媒体
+  - RULE-SET, Disney_blackmatrix7, 🌍 国外媒体
+  - RULE-SET, HBO_blackmatrix7, 🌍 国外媒体
+  - RULE-SET, Spotify_blackmatrix7, 🌍 国外媒体
+  - RULE-SET, YouTube_blackmatrix7, 🌍 国外媒体
+  # - RULE-SET, YouTube_ACL4SSR, 🌍 国外媒体
+  - RULE-SET, GlobalMedia_blackmatrix7, 🌍 国外媒体
+  # - RULE-SET, ProxyMedia_ACL4SSR, 🌍 国外媒体
+  - RULE-SET, NetEaseMusic_blackmatrix7, 🌏 国内媒体
+  # - RULE-SET, NetEaseMusic_ACL4SSR, 🌏 国内媒体
+  - RULE-SET, BiliBili_blackmatrix7, 🌏 国内媒体
+  # - RULE-SET, BilibiliHMT_ACL4SSR, 🌏 国内媒体
+  # - RULE-SET, Bilibili_ACL4SSR, 🌏 国内媒体
+  - RULE-SET, ChinaMedia_blackmatrix7, 🌏 国内媒体
+  # - RULE-SET, ChinaMedia_ACL4SSR, 🌏 国内媒体
+
+  ## 兜底规则 Part 1
+  - GEOSITE, geolocation-!cn, 🏳️‍🌈 国外服务
+  # - RULE-SET, tld-not-cn_Loyalsoldier, 🏳️‍🌈 国外服务
+  # - RULE-SET, gfw_Loyalsoldier, 🏳️‍🌈 国外服务
+  # - RULE-SET, greatfire_Loyalsoldier, 🏳️‍🌈 国外服务
+  # - RULE-SET, Proxy_Classical_blackmatrix7, 🏳️‍🌈 国外服务
+  # - RULE-SET, Proxy_lodepuly, 🏳️‍🌈 国外服务
+  # - RULE-SET, ProxyGFWlist_ACL4SSR, 🏳️‍🌈 国外服务
+  # - RULE-SET, proxy_Loyalsoldier, 🏳️‍🌈 国外服务
+  # - RULE-SET, Global_Classical_blackmatrix7, 🏳️‍🌈 国外服务
+  - GEOSITE, cn, DIRECT
+  - GEOIP, cn, DIRECT
+
+  ## 拦截广告白名单
+  ### anti-AD + blackmatrix7
+  # - OR,((RULE-SET,anti-AD-white),(RULE-SET,Direct_blackmatrix7),(RULE-SET,AdGuardSDNSFilter_Direct_blackmatrix7)), DIRECT
+  - OR,((RULE-SET,anti-AD-white),(RULE-SET,Direct_blackmatrix7)), DIRECT
+
+  ## 兜底规则 Part 2
+  # - RULE-SET, direct_Loyalsoldier, DIRECT
+  - RULE-SET, cncidr_Loyalsoldier, DIRECT, no-resolve
+  - RULE-SET, ChinaMax_Classical_blackmatrix7, DIRECT
+  # - RULE-SET, ChinaDomain_ACL4SSR, DIRECT
+  - MATCH, 🐟 漏网之鱼
