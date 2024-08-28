@@ -48,3 +48,10 @@ DOMAIN-SUFFIX,cdn.hinet.net,Taiwan
 #DOMAIN-SUFFIX,*.cdn.hinet.net
 USER-AGENT,encoreTVB*
 USER-AGENT,mytv*
+
+DOMAIN-SUFFIX,uy.ts.ulivetv.net
+DOMAIN-SUFFIX,thetvapp.to
+DOMAIN-SUFFIX,livednow.us.kg
+DOMAIN-SUFFIX,freetv.fun
+DOMAIN-SUFFIX,mytvsuper.us.kg
+
