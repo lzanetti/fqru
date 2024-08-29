@@ -29,8 +29,8 @@ DOMAIN-SUFFIX,videos-f.jwpsrv.com
 DOMAIN-SUFFIX,youboranqs01.com
 DOMAIN-SUFFIX,tvmedia.net.au
 DOMAIN-SUFFIX,tvmedia.net.au
-DOMAIN-SUFFIX,stream-link.org
-DOMAIN-SUFFIX,stream-link.online
+#DOMAIN-SUFFIX,stream-link.org
+#DOMAIN-SUFFIX,stream-link.online
 DOMAIN-SUFFIX,z02.ubtvfans.com
 DOMAIN-SUFFIX,z1.ubtvfans.com
 DOMAIN-SUFFIX,mytvsuper.btjson.us.kg
