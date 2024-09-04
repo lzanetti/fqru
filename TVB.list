@@ -43,7 +43,7 @@ DOMAIN-SUFFIX,edgeware.tvb.com
 DOMAIN-SUFFIX,beesport.livednow.com
 DOMAIN-SUFFIX,assets.livednow.com
 DOMAIN-SUFFIX,sxg.btjson.us.kg
-DOMAIN-SUFFIX,litvpc-hichannel.cdn.hinet.net
+#DOMAIN-SUFFIX,litvpc-hichannel.cdn.hinet.net
 DOMAIN-SUFFIX,cdn.hinet.net,Taiwan
 #DOMAIN-SUFFIX,*.cdn.hinet.net
 USER-AGENT,encoreTVB*
