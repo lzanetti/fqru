@@ -64,7 +64,7 @@ DOMAIN-SUFFIX,magpie.cyou
 DOMAIN-SUFFIX,ccemby.tk
 DOMAIN-SUFFIX,embyplus.club
 DOMAIN-SUFFIX,speedx.one
-DOMAIN-SUFFIX,embymv.tk
+#DOMAIN-SUFFIX,embymv.tk
 DOMAIN-SUFFIX,mjjemby.org
 DOMAIN-SUFFIX,bddup.com
 DOMAIN-SUFFIX,emby.cl
@@ -114,7 +114,7 @@ DOMAIN-SUFFIX,emby2.misakaf.org
 DOMAIN-SUFFIX,123456.al
 DOMAIN-SUFFIX,emby.pro
 DOMAIN-SUFFIX,xiaoyi.one
-DOMAIN-SUFFIX,embymv.me
+#DOMAIN-SUFFIX,embymv.me
 DOMAIN-SUFFIX,infinityfly.top
 DOMAIN-SUFFIX,lucasmedia.top
 DOMAIN-SUFFIX,nvidia.rip
