@@ -135,6 +135,14 @@ rule-providers:
     path: ./rule_provider/EmbyGYF.list
     url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/gyemb.list"
     interval: 86400
+  #Emby qtf
+  EmbyQTF:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/EmbyQTF.list
+    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/qtemb.list"
+    interval: 86400
 
 mode: rule
 # ipv6 支持
@@ -366,6 +374,7 @@ rules:
 # - GEOSITE,bilibili,哔哩哔哩
 
   - RULE-SET,EmbyGYF,EmbyACA
+  - RULE-SET,EmbyQTF,EmbyOth
   - GEOSITE,openai,OpenAI
   - GEOSITE,apple,Apple
   - GEOSITE,apple-cn,Apple
