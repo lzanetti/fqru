@@ -188,7 +188,8 @@ rule-providers:
     behavior: domain
     format: mrs
     path: ./rule_provider/tiktok.mrs
-    url: "https://github.com/DustinWin/ruleset_geodata/releases/download/clash-ruleset/tiktok.mrs"
+    #url: "https://github.com/DustinWin/ruleset_geodata/releases/download/clash-ruleset/tiktok.mrs"
+    url: "https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@releases/download/clash-ruleset/tiktok.mrs"
     interval: 86400
   #Game_cn
   games-cn:
@@ -196,7 +197,8 @@ rule-providers:
     behavior: domain
     format: mrs
     path: ./rule_provider/games-cn.mrs
-    url: "https://github.com/DustinWin/ruleset_geodata/releases/download/clash-ruleset/games-cn.mrs"
+    #url: "https://github.com/DustinWin/ruleset_geodata/releases/download/clash-ruleset/games-cn.mrs"
+    url: "https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@releases/download/clash-ruleset/games-cn.mrs"
     interval: 86400
 
 mode: rule
