@@ -37,12 +37,12 @@ pr:
 p: &p
   type: http
   # 自动更新订阅时间，单位为秒
-  interval: 3600
+  interval: 86400
   health-check:
     enable: true
     url: https://cp.cloudflare.com
     # 节点连通性检测时间，单位为秒
-    interval: 300
+    interval: 30000
     # 节点超时延迟，单位为毫秒
     timeout: 1000
     # 节点自动切换差值，单位为毫秒
@@ -117,7 +117,7 @@ rule-providers:
     # path可为空(仅限clash.meta 1.15.0以上版本)
     path: ./rule_provider/anti-AD.yaml
     url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml?"
-    interval: 600
+    interval: 86400
   # anti-AD 白名单规则
   anti-AD-white:
     type: http
@@ -126,13 +126,13 @@ rule-providers:
     # path可为空(仅限clash.meta 1.15.0以上版本)
     path: ./rule_provider/anti-AD-white.yaml
     url: "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
-    interval: 600
+    interval: 86400
   # ACA Emby
   EmbyGYF:
     type: http
     behavior: classical
     format: text
-    path: ./rule_provider/EmbyGYF.list
+    path: ./rule_provider/gyemb.list
     url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/gyemb.list"
     interval: 86400
   #Emby qtf
@@ -140,8 +140,40 @@ rule-providers:
     type: http
     behavior: classical
     format: text
-    path: ./rule_provider/EmbyQTF.list
+    path: ./rule_provider/qtemb.list
     url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/qtemb.list"
+    interval: 86400
+  #TVB
+  TVBTV:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/TVB.list
+    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/TVB.list"
+    interval: 86400
+  #倍率
+  BeilvMedia:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/beilv.list
+    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/beilv.list"
+    interval: 86400
+  #JP
+  JPPN:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/jpwz.list
+    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/jpwz.list"
+    interval: 86400
+  #直连
+  Zhilian:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/zhilian.list
+    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/zhilian.list"
     interval: 86400
 
 mode: rule
@@ -375,6 +407,10 @@ rules:
 
   - RULE-SET,EmbyGYF,EmbyACA
   - RULE-SET,EmbyQTF,EmbyOth
+  - RULE-SET,TVBTV,TVB
+  - RULE-SET,BeilvMedia,倍率
+  - RULE-SET,JPPN,日本
+  - RULE-SET,Zhilian,国内
   - GEOSITE,openai,OpenAI
   - GEOSITE,apple,Apple
   - GEOSITE,apple-cn,Apple
