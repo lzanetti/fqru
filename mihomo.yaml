@@ -75,22 +75,26 @@ proxy-providers:
     <<: *p
     # path: ./proxy_provider/订阅一.yaml
     url: "https://dadada.acaisbest.com/api/v1/client/subscribe?token=4d4e8c97ccd9f8defb788e8b838eb5e9"
+    exclude-filter: "套|距|剩|官"
 
   订阅二:
     <<: *p
     # path: ./proxy_provider/订阅二.yaml
     url: "https://junnanliangnv.egfu.cn/api/v1/client/subscribe?token=666370e1eeb462deffe0a8b8a8249183"
+    exclude-filter: "套|距|剩|官"
 
   订阅三:
     <<: *p
     # path: ./proxy_provider/订阅三.yaml
     url: "https://xn--cp3a08l.com/api/v1/client/subscribe?token=a396deeda55a15f90e5677e9d0418b27"
+    exclude-filter: "套|距|剩|官"
 
 
   订阅四:
     <<: *p
     # path: ./proxy_provider/订阅四.yaml
     url: "https://study.jaycloud11111.top/study?token=b2590afb3a5e508734b1d45bd777dcdf"
+    exclude-filter: "套|距|剩|官"
 
   # 本地配置:
     # <<: *p
@@ -339,7 +343,7 @@ proxy-groups:
       <<: *use,
       filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*",
     }
-  - { name: 全部节点, <<: *use }
+  - { name: 全部节点, type: select, <<: *use }
   - { name: 自动选择, <<: *use, tolerance: 2, type: url-test }
 
 rules:
