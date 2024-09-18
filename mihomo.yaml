@@ -42,7 +42,7 @@ p: &p
     enable: true
     url: https://cp.cloudflare.com
     # 节点连通性检测时间，单位为秒
-    interval: 30000
+    interval: 43200
     # 节点超时延迟，单位为毫秒
     timeout: 1000
     # 节点自动切换差值，单位为毫秒
@@ -239,7 +239,7 @@ find-process-mode: strict
 
 # 缓解移动设备耗电问题
 # https://github.com/vernesong/OpenClash/issues/2614
-keep-alive-interval: 1800
+keep-alive-interval: 43200
 
 # 全局客户端指纹
 global-client-fingerprint: random # 随机指纹
@@ -251,12 +251,12 @@ profile:
 
 # 自动同步时间以防止时间不准导致无法正常联网
 ntp:
-  enable: true
+  enable: false
   # 是否同步至系统时间，需要 root/管理员权限
   write-to-system: false
   server: time.apple.com
   port: 123
-  interval: 30
+  interval: 43200
 
 # 域名嗅探
 sniffer:
@@ -270,7 +270,7 @@ sniffer:
 
 # tun 模式
 tun:
-  enable: false  # enable 'true'
+  enable: true # enable 'true'
   stack: system  # or 'gvisor'
   dns-hijack:
     - "any:53"
@@ -286,7 +286,7 @@ dns:
   ipv6: true
   # 路由器个人建议使用 redir-host 以最佳兼容性
   # 其他设备可以使用 fake-ip
-  enhanced-mode: redir-host
+  enhanced-mode: fake-ip
   fake-ip-range: 28.0.0.1/8
   fake-ip-filter:
     - '*'
