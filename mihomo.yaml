@@ -62,38 +62,38 @@ use: &use
   type: select
   #type: url-test
   use:
-    - 订阅一
-    - 订阅二
-    - 订阅三
-    - 订阅四
+    - ACA
+    - Ash
+    - PQ机场
+    - JayCloud
     # - 本地配置
 
 # 订阅链接
 # 对于订阅来说，path 为选填项，但建议启用
 # 本地配置可以只填 path
 proxy-providers:
-  订阅一:
+  ACA:
     <<: *p
-    # path: ./proxy_provider/订阅一.yaml
+    # path: ./proxy_provider/ACA.yaml
     url: "https://dadada.acaisbest.com/api/v1/client/subscribe?token=4d4e8c97ccd9f8defb788e8b838eb5e9"
     exclude-filter: "套|距|剩|官"
 
-  订阅二:
+  Ash:
     <<: *p
-    # path: ./proxy_provider/订阅二.yaml
+    # path: ./proxy_provider/Ash.yaml
     url: "https://junnanliangnv.egfu.cn/api/v1/client/subscribe?token=666370e1eeb462deffe0a8b8a8249183"
     exclude-filter: "套|距|剩|官|去除"
 
-  订阅三:
+  PQ机场:
     <<: *p
-    # path: ./proxy_provider/订阅三.yaml
+    # path: ./proxy_provider/PQ机场.yaml
     url: "https://xn--cp3a08l.com/api/v1/client/subscribe?token=a396deeda55a15f90e5677e9d0418b27"
     exclude-filter: "套|距|剩|官"
 
 
-  订阅四:
+  JayCloud:
     <<: *p
-    # path: ./proxy_provider/订阅四.yaml
+    # path: ./proxy_provider/JayCloud.yaml
     url: "https://study.jaycloud11111.top/study?token=b2590afb3a5e508734b1d45bd777dcdf"
     exclude-filter: "套|距|剩|官"
 
