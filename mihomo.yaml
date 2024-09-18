@@ -116,7 +116,7 @@ rule-providers:
     format: yaml
     # path可为空(仅限clash.meta 1.15.0以上版本)
     path: ./rule_provider/anti-AD.yaml
-    url: "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml?"
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/master/anti-ad-clash.yaml?"
     interval: 86400
   # anti-AD 白名单规则
   anti-AD-white:
@@ -125,7 +125,7 @@ rule-providers:
     format: yaml
     # path可为空(仅限clash.meta 1.15.0以上版本)
     path: ./rule_provider/anti-AD-white.yaml
-    url: "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
     interval: 86400
   # ACA Emby
   EmbyGYF:
@@ -133,7 +133,7 @@ rule-providers:
     behavior: classical
     format: text
     path: ./rule_provider/gyemb.list
-    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/gyemb.list"
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/gyemb.list"
     interval: 86400
   #Emby qtf
   EmbyQTF:
@@ -141,7 +141,7 @@ rule-providers:
     behavior: classical
     format: text
     path: ./rule_provider/qtemb.list
-    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/qtemb.list"
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/qtemb.list"
     interval: 86400
   #TVB
   TVBTV:
@@ -149,7 +149,7 @@ rule-providers:
     behavior: classical
     format: text
     path: ./rule_provider/TVB.list
-    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/TVB.list"
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/TVB.list"
     interval: 86400
   #倍率
   BeilvMedia:
@@ -157,7 +157,7 @@ rule-providers:
     behavior: classical
     format: text
     path: ./rule_provider/beilv.list
-    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/beilv.list"
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/beilv.list"
     interval: 86400
   #JP
   JPPN:
@@ -165,7 +165,7 @@ rule-providers:
     behavior: classical
     format: text
     path: ./rule_provider/jpwz.list
-    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/jpwz.list"
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/jpwz.list"
     interval: 86400
   #直连
   Zhilian:
@@ -173,7 +173,30 @@ rule-providers:
     behavior: classical
     format: text
     path: ./rule_provider/zhilian.list
-    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/zhilian.list"
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/zhilian.list"
+    interval: 86400
+  #Streaming Global
+  Streaming:
+    type: http
+    behavior: domain
+    path: ./rule_provider/globalmedia.yaml
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Domain.yaml"
+    interval: 86400
+  #Tiktok
+  TiktokG:
+    type: http
+    behavior: domain
+    format: mrs
+    path: ./rule_provider/tiktok.mrs
+    url: "https://github.com/DustinWin/ruleset_geodata/releases/download/clash-ruleset/tiktok.mrs"
+    interval: 86400
+  #Game_cn
+  games-cn:
+    type: http
+    behavior: domain
+    format: mrs
+    path: ./rule_provider/games-cn.mrs
+    url: "https://github.com/DustinWin/ruleset_geodata/releases/download/clash-ruleset/games-cn.mrs"
     interval: 86400
 
 mode: rule
@@ -341,6 +364,7 @@ proxy-groups:
 
   - { name: 广告拦截, type: select, proxies: [REJECT, DIRECT, 节点选择] }
   - { name: OpenAI, <<: *pr }
+  - { name: Tiktok, <<: *pr }
   # Apple 推荐走全局直连
   - { name: Apple, <<: *pr }
   - { name: Google, <<: *pr }
@@ -411,6 +435,8 @@ rules:
   - RULE-SET,BeilvMedia,倍率
   - RULE-SET,JPPN,日本
   - RULE-SET,Zhilian,国内
+  - RULE-SET,TiktokG,Tiktok
+  - RULE-SET,games-cn,国内
   - GEOSITE,openai,OpenAI
   - GEOSITE,apple,Apple
   - GEOSITE,apple-cn,Apple
@@ -435,6 +461,7 @@ rules:
   - GEOIP,netflix,NETFLIX
   - GEOIP,telegram,Telegram
   - GEOIP,twitter,Twitter
+  - RULE-SET,Streaming,倍率
   - GEOSITE,CN,国内
   - GEOIP,CN,国内
   - MATCH,其他
