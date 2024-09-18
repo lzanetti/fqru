@@ -127,6 +127,14 @@ rule-providers:
     path: ./rule_provider/anti-AD-white.yaml
     url: "https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
     interval: 600
+  # ACA Emby
+  EmbyGYF:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/EmbyGYF.list
+    url: "https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/gyemb.list"
+    interval: 86400
 
 mode: rule
 # ipv6 支持
@@ -357,6 +365,7 @@ rules:
 # - GEOSITE,biliintl,哔哩东南亚
 # - GEOSITE,bilibili,哔哩哔哩
 
+  - RULE-SET,EmbyGYF,EmbyACA
   - GEOSITE,openai,OpenAI
   - GEOSITE,apple,Apple
   - GEOSITE,apple-cn,Apple
