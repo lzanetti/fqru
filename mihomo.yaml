@@ -128,7 +128,7 @@ rule-providers:
     url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/privacy-protection-tools/dead-horse/master/anti-ad-white-for-clash.yaml?"
     interval: 86400
   #BlackMatrix7直连
-    BlackMatrix7_Direct:
+  BlackMatrix7_Direct:
     type: http
     behavior: domain
     format: yaml
