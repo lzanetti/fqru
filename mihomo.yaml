@@ -144,7 +144,7 @@ rule-providers:
     url: "https://fastly.jsdelivr.net/gh/TG-Twilight/AWAvenue-Ads-Rule@main/Filters/AWAvenue-Ads-Rule-Clash-classical.yaml"
     interval: 86400
   #MetaCubeX广告规则
-  MetaCubeX:
+  MetaCubeX-AD:
     type: http
     behavior: domain
     format: mrs
@@ -472,8 +472,7 @@ rules:
 # - GEOSITE,bilibili,哔哩哔哩
   - RULE-SET,BlackMatrix7_Direct,DIRECT
   - RULE-SET,AWAvenue,广告拦截
-  
-  - RULE-SET,MetaCubeX,广告拦截
+  - RULE-SET,MetaCubeX-AD,广告拦截
   - RULE-SET,Blackmatrix7,广告拦截
   - RULE-SET,DustinWin,广告拦截
   - RULE-SET,EmbyGYF,EmbyACA
