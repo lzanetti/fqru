@@ -482,6 +482,7 @@ proxy-groups:
   - { name: 自动选择, <<: *use, tolerance: 2, type: url-test }
 
 rules:
+  - RULE-SET,Zhilian,国内
   # 若需禁用 QUIC 请取消注释 QUIC 两条规则
   # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
 
@@ -499,7 +500,7 @@ rules:
   - RULE-SET,TVBTV,TVB
   - RULE-SET,BeilvMedia,倍率
   - RULE-SET,JPPN,日本
-  - RULE-SET,Zhilian,国内
+  
   - RULE-SET,TiktokG,Tiktok
   - RULE-SET,games-cn,国内
   - GEOSITE,openai,OpenAI
