@@ -242,7 +242,8 @@ rule-providers:
     #url: "https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@releases/download/clash-ruleset/games-cn.mrs"
     interval: 86400
 
-mode: rule
+#改
+#mode: rule
 # ipv6 支持
 ipv6: true
 log-level: info
@@ -253,12 +254,17 @@ mixed-port: 7890
 # Meta 内核特性 https://wiki.metacubex.one/config/general
 # 统一延迟
 # 更换延迟计算方式,去除握手等额外延迟
-unified-delay: true
+# 改
+#unified-delay: true
+unified-delay: false
 # TCP 并发
 # 同时对所有ip进行连接，返回延迟最低的地址
 tcp-concurrent: true
 # 外部控制端口
-external-controller: :9090
+#external-controller: :9090
+external-controller: 127.0.0.1:9090
+external-ui: ui
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 
 geodata-mode: true
 
@@ -267,9 +273,13 @@ geodata-mode: true
 # 源地址 https://github.com/MetaCubeX/meta-rules-dat
 # 可以更换镜像站但不要更换其他数据库，可能导致无法启动
 geox-url:
-  geoip: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
-  geosite: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
-  mmdb: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+  #geoip: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  #geosite: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  #mmdb: "https://hub.gitmirror.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+  geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+  geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+  mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+  asn: "https://mirror.ghproxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 
 # 进程匹配模式
 # 路由器上请设置为 off
@@ -283,7 +293,9 @@ find-process-mode: strict
 keep-alive-interval: 43200
 
 # 全局客户端指纹
-global-client-fingerprint: random # 随机指纹
+#改
+#global-client-fingerprint: random # 随机指纹
+global-client-fingerprint: chrome
 
 # 缓存
 profile:
@@ -291,13 +303,13 @@ profile:
   store-fake-ip: true
 
 # 自动同步时间以防止时间不准导致无法正常联网
-ntp:
-  enable: false
+#ntp:
+  #enable: false
   # 是否同步至系统时间，需要 root/管理员权限
-  write-to-system: false
-  server: time.apple.com
-  port: 123
-  interval: 43200
+  #write-to-system: false
+  #server: time.apple.com
+  #port: 123
+  #interval: 43200
 
 # 域名嗅探
 sniffer:
@@ -308,15 +320,20 @@ sniffer:
     HTTP:
       ports: [80, 8080-8880]
       override-destination: true
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
 
 # tun 模式
 tun:
   enable: true # enable 'true'
-  stack: system  # or 'gvisor'
+  #stack: system  # or 'gvisor'
+  stack: mixed
   dns-hijack:
     - "any:53"
     - "tcp://any:53"
   auto-route: true
+  auto-redirect: true
   auto-detect-interface: true
 
 # dns 设置
@@ -325,6 +342,7 @@ dns:
   enable: true
   listen: :1053
   ipv6: true
+  respect-rules: true
   # 路由器个人建议使用 redir-host 以最佳兼容性
   # 其他设备可以使用 fake-ip
   enhanced-mode: fake-ip
@@ -472,7 +490,7 @@ rules:
 # - GEOSITE,biliintl,哔哩东南亚
 # - GEOSITE,bilibili,哔哩哔哩
   - RULE-SET,BlackMatrix7_Direct,DIRECT
-  - RULE-SET,AWAvenue,广告拦截
+  #- RULE-SET,AWAvenue,广告拦截
   - RULE-SET,MetaCubeX-AD,广告拦截
   - RULE-SET,Blackmatrix7,广告拦截
   - RULE-SET,DustinWin,广告拦截
