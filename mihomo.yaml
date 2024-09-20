@@ -242,8 +242,7 @@ rule-providers:
     #url: "https://cdn.jsdelivr.net/gh/DustinWin/ruleset_geodata@releases/download/clash-ruleset/games-cn.mrs"
     interval: 86400
 
-#改
-#mode: rule
+mode: rule
 # ipv6 支持
 ipv6: true
 log-level: info
@@ -290,7 +289,7 @@ find-process-mode: strict
 
 # 缓解移动设备耗电问题
 # https://github.com/vernesong/OpenClash/issues/2614
-keep-alive-interval: 43200
+keep-alive-interval: 1800
 
 # 全局客户端指纹
 #改
