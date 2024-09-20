@@ -491,7 +491,7 @@ rules:
 # - GEOSITE,bilibili,哔哩哔哩
   - RULE-SET,BlackMatrix7_Direct,DIRECT
   - RULE-SET,AWAvenue,广告拦截
-  #- RULE-SET,MetaCubeX-AD,广告拦截
+  - RULE-SET,MetaCubeX-AD,广告拦截
   - RULE-SET,Blackmatrix7,广告拦截
   #- RULE-SET,DustinWin,广告拦截
   - RULE-SET,EmbyGYF,EmbyACA
