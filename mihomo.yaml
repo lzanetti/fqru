@@ -85,6 +85,10 @@ proxy-providers:
     <<: *p
     # path: ./proxy_provider/PQ机场.yaml
     url: "https://xn--cp3a08l.com/api/v1/client/subscribe?token=a396deeda55a15f90e5677e9d0418b27"
+    override:
+      proxy-name:
+      -pattern: "0.01倍"
+       target: "0.01x"
     exclude-filter: "套|距|剩|官|2倍|5倍"
 
 
@@ -92,6 +96,10 @@ proxy-providers:
     <<: *p
     # path: ./proxy_provider/JayCloud.yaml
     url: "https://study.jaycloud11111.top/study?token=b2590afb3a5e508734b1d45bd777dcdf"
+    override:
+      proxy-name:
+      -pattern: "油管无广告"
+       target: ""
     exclude-filter: "套|距|剩|官"
 
   # 本地配置:
@@ -274,7 +282,7 @@ geox-url:
   geoip: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
   geosite: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
   mmdb: "https://mirror.ghproxy.com/https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
-  #asn: "https://mirror.ghproxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
+  asn: "https://mirror.ghproxy.com/https://github.com/xishang0128/geoip/releases/download/latest/GeoLite2-ASN.mmdb"
 
 # 进程匹配模式
 # 路由器上请设置为 off
@@ -291,7 +299,7 @@ keep-alive-interval: 1800
 # 全局客户端指纹
 #改
 #global-client-fingerprint: random # 随机指纹
-global-client-fingerprint: random
+global-client-fingerprint: chrome
 
 # 缓存
 profile:
