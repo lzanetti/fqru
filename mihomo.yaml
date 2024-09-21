@@ -88,8 +88,8 @@ proxy-providers:
     url: "https://xn--cp3a08l.com/api/v1/client/subscribe?token=a396deeda55a15f90e5677e9d0418b27"
     override:
       proxy-name:
-      - pattern: "0.01倍"
-        target: "0.01x"
+      - pattern: "0.01x"
+        target: "0.01倍"
     exclude-filter: "套|距|剩|官|2倍|5倍"
 
   JayCloud:
@@ -98,8 +98,8 @@ proxy-providers:
     url: "https://study.jaycloud11111.top/study?token=b2590afb3a5e508734b1d45bd777dcdf"
     override:
       proxy-name:
-      - pattern: "油管无广告"
-        target: ""
+      - pattern: ""
+        target: "油管无广告"
     exclude-filter: "套|距|剩|官"
 
   YF机场:
