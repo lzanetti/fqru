@@ -85,7 +85,7 @@ proxy-providers:
     <<: *p
     # path: ./proxy_provider/PQ机场.yaml
     url: "https://xn--cp3a08l.com/api/v1/client/subscribe?token=a396deeda55a15f90e5677e9d0418b27"
-    exclude-filter: "套|距|剩|官"
+    exclude-filter: "套|距|剩|官|2倍|5倍|倍"
 
 
   JayCloud:
