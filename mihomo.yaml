@@ -460,7 +460,7 @@ proxy-groups:
   - { name: 倍率, type: select, <<: *use, filter: "0.01" }
   - { name: TVB, type: select, <<: *use, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择] }
   # 这里的 dns 指海外解析 dns 走的节点，一般跟随节点选择即可
-  - { name: dns, <<: *pr }
+  #- { name: dns, <<: *pr }
   # WARP 配置链式出站
   # - { name: WARP前置, <<: *pr, exclude-type: "wireguard" }
 
@@ -472,18 +472,18 @@ proxy-groups:
   - { name: Google, <<: *pr }
   - { name: Telegram, <<: *pr }
   - { name: Twitter, <<: *pr }
-  - { name: Pixiv, <<: *pr }
-  - { name: ehentai, <<: *pr }
+  #- { name: Pixiv, <<: *pr }
+  #- { name: ehentai, <<: *pr }
   # 下面两个看需求启用，打开之后会代理全站流量，可能导致部分版权视频反而无法播放或视频播放速度缓慢
   # 下面 rules 两条也要启用
 # - {name: 哔哩哔哩, <<: *pr}
 # - {name: 哔哩东南亚, <<: *pr}
-  - { name: 巴哈姆特, <<: *pr }
+  #- { name: 巴哈姆特, <<: *pr }
   - { name: YouTube, <<: *pr }
   - { name: NETFLIX, <<: *pr }
   - { name: Spotify, <<: *pr }
   - { name: Github, <<: *pr }
-  - { name: Steam, <<: *pr }
+  #- { name: Steam, <<: *pr }
   - { name: OneDrive, <<: *pr }
   - { name: 微软服务, <<: *pr }
   - {
@@ -547,7 +547,7 @@ rules:
   - GEOSITE,openai,OpenAI
   - GEOSITE,apple,Apple
   - GEOSITE,apple-cn,Apple
-  - GEOSITE,ehentai,ehentai
+  #- GEOSITE,ehentai,ehentai
   - GEOSITE,github,Github
   - GEOSITE,twitter,Twitter
   - GEOSITE,youtube,YouTube
@@ -555,11 +555,11 @@ rules:
   - GEOSITE,google-cn,Google # Google CN 不走代理会导致香港等地区节点 Play Store 异常
   - GEOSITE,telegram,Telegram
   - GEOSITE,netflix,NETFLIX
-  - GEOSITE,bahamut,巴哈姆特
+  #- GEOSITE,bahamut,巴哈姆特
   - GEOSITE,spotify,Spotify
-  - GEOSITE,pixiv,Pixiv
+  #- GEOSITE,pixiv,Pixiv
   - GEOSITE,steam@cn,DIRECT
-  - GEOSITE,steam,Steam
+  #- GEOSITE,steam,Steam
   - GEOSITE,onedrive,OneDrive
   - GEOSITE,microsoft,微软服务
   - GEOSITE,geolocation-!cn,其他
