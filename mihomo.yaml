@@ -63,6 +63,7 @@ use: &use
     - Ash
     - PQ机场
     - JayCloud
+    - YF机场
     # - 本地配置
 
 # 订阅链接
@@ -87,10 +88,9 @@ proxy-providers:
     url: "https://xn--cp3a08l.com/api/v1/client/subscribe?token=a396deeda55a15f90e5677e9d0418b27"
     override:
       proxy-name:
-      -pattern: "0.01倍"
-       target: "0.01x"
+      - pattern: "0.01倍"
+        target: "0.01x"
     exclude-filter: "套|距|剩|官|2倍|5倍"
-
 
   JayCloud:
     <<: *p
@@ -98,10 +98,15 @@ proxy-providers:
     url: "https://study.jaycloud11111.top/study?token=b2590afb3a5e508734b1d45bd777dcdf"
     override:
       proxy-name:
-      -pattern: "油管无广告"
-       target: ""
+      - pattern: "油管无广告"
+        target: ""
     exclude-filter: "套|距|剩|官"
 
+  YF机场:
+    <<: *p
+    # path: ./proxy_provider/YF机场.yaml
+    url: "https://www.yfjc.xyz/api/v1/client/subscribe?token=1b1502df00abe390e4acf2b1fe6e0f07"
+    exclude-filter: "套|距|剩|官"
   # 本地配置:
     # <<: *p
     # path: ./proxy_provider/本地配置.yaml
