@@ -289,6 +289,7 @@ find-process-mode: strict
 
 # 缓解移动设备耗电问题
 # https://github.com/vernesong/OpenClash/issues/2614
+disable-keep-alive: true
 keep-alive-interval: 1800
 
 # 全局客户端指纹
@@ -325,7 +326,7 @@ sniffer:
 
 # tun 模式
 tun:
-  enable: false # enable 'true'
+  enable: true # enable 'true'
   #stack: system  # or 'gvisor'
   stack: mixed
   dns-hijack:
@@ -344,7 +345,7 @@ dns:
   respect-rules: true
   # 路由器个人建议使用 redir-host 以最佳兼容性
   # 其他设备可以使用 fake-ip
-  enhanced-mode: redir-host
+  enhanced-mode: fake-ip
   fake-ip-range: 28.0.0.1/8
   fake-ip-filter:
     - '*'
@@ -359,7 +360,7 @@ dns:
   nameserver:
     - 'tls://8.8.4.4#dns'
     - 'tls://1.0.0.1#dns'
-    - 'tls://[2001:4860:4860::8844]#dns'
+    #- 'tls://[2001:4860:4860::8844]#dns'
     - 'tls://[2606:4700:4700::1001]#dns'
   proxy-server-nameserver:
     - https://doh.pub/dns-query
@@ -491,9 +492,9 @@ rules:
 # - GEOSITE,bilibili,哔哩哔哩
   #- RULE-SET,BlackMatrix7_Direct,DIRECT
   #- RULE-SET,Blackmatrix7,广告拦截
-  #- RULE-SET,AWAvenue,广告拦截
-  - RULE-SET,MetaCubeX-AD,广告拦截
-  #- RULE-SET,DustinWin,广告拦截
+  - AND RULE-SET,AWAvenue,广告拦截
+  - AND RULE-SET,MetaCubeX-AD,广告拦截
+  - AND RULE-SET,DustinWin,广告拦截
   - RULE-SET,EmbyGYF,EmbyACA
   - RULE-SET,EmbyQTF,EmbyOth
   - RULE-SET,TVBTV,TVB
