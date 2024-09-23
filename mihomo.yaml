@@ -107,6 +107,13 @@ proxy-providers:
     # path: ./proxy_provider/YF机场.yaml
     url: "https://www.yfjc.xyz/api/v1/client/subscribe?token=1b1502df00abe390e4acf2b1fe6e0f07"
     exclude-filter: "套|距|剩|官"
+	
+  mytvsuper:
+    <<: *p
+    # path: ./proxy_provider/mytvsuper.yaml
+    url: "https://sub.443888.xyz/vless"
+    exclude-filter: "套|距|剩|官"
+
   # 本地配置:
     # <<: *p
     # path: ./proxy_provider/本地配置.yaml
@@ -437,6 +444,7 @@ proxy-groups:
         [全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, DIRECT],
     }
   - { name: 全部节点, <<: *use }
+  - { name: mytvsuper, use: mytvsuper }
   #Emby及倍率
   - { name: EmbyACA, type: select, <<: *use, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择] }
   - { name: EmbyOth, type: select, <<: *use, proxies: [DIRECT, 倍率, 节点选择] }
