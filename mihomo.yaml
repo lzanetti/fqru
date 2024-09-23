@@ -23,6 +23,7 @@ pr:
         新加坡,
         美国,
         倍率,
+        Mytvsuper,
         其它地区,
         全部节点,
         自动选择,
@@ -443,7 +444,7 @@ proxy-groups:
       icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Quantumult_X.png,
     }
   - { name: 全部节点, <<: *use_p, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png }
-  - { name: Mytvsuper, type: select, use: [mytvsuper], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TVB.png }
+  - { name: Mytvsuper, type: select, use: [mytvsuper], icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png }
   #Emby及倍率
   - { name: Emby, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png }
   - { name: Emby其他, type: select, <<: *use_p, proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/emby(1).png }
