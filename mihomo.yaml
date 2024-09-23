@@ -444,7 +444,7 @@ proxy-groups:
         [全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, DIRECT],
     }
   - { name: 全部节点, <<: *use }
-  - { name: mytvsuper, type:select, use: mytvsuper }
+  - { name: mytvsuper, type: select, use: mytvsuper, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png }
   #Emby及倍率
   - { name: EmbyACA, type: select, <<: *use, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择] }
   - { name: EmbyOth, type: select, <<: *use, proxies: [DIRECT, 倍率, 节点选择] }
