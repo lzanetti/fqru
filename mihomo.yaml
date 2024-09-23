@@ -106,8 +106,8 @@ proxy-providers:
     <<: *p
     # path: ./proxy_provider/YF机场.yaml
     url: "https://www.yfjc.xyz/api/v1/client/subscribe?token=1b1502df00abe390e4acf2b1fe6e0f07"
-    exclude-filter: "套|距|剩|官"
-	
+    exclude-filter: "套|距|剩|官"	
+  
   mytvsuper:
     <<: *p
     # path: ./proxy_provider/mytvsuper.yaml
