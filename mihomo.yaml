@@ -449,7 +449,7 @@ proxy-groups:
   # - { name: WARP前置, <<: *pr, exclude-type: "wireguard" }
 
   - { name: 广告拦截, type: select, proxies: [REJECT, DIRECT, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png }
-  - { name: OpenAI, <<: *pr, icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/ChatGPT.png }
+  - { name: OpenAI, <<: *pr, icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/chatgpt4.0.png }
   - { name: Tiktok, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png }
   # Apple 推荐走全局直连
   - { name: Apple, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png }
