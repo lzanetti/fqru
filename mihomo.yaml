@@ -54,7 +54,7 @@ p: &p
 
 # 订阅名，记得修改成自己的
 # 添删订阅在这里和下方订阅链接依葫芦画瓢就行
-use: &use
+use_p: &use
   # 如果不希望自动切换请将下面两行注释对调
   type: select
   #type: url-test
@@ -443,13 +443,13 @@ proxy-groups:
       proxies:
         [全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, DIRECT],
     }
-  - { name: 全部节点, <<: *use }
+  - { name: 全部节点, <<: *use_p }
   - { name: mytvsuper, type: select, use: mytvsuper, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png }
   #Emby及倍率
-  - { name: EmbyACA, type: select, <<: *use, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择] }
-  - { name: EmbyOth, type: select, <<: *use, proxies: [DIRECT, 倍率, 节点选择] }
-  - { name: 倍率, type: select, <<: *use, filter: "0.01" }
-  - { name: TVB, type: select, <<: *use, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择] }
+  - { name: EmbyACA, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择] }
+  - { name: EmbyOth, type: select, <<: *use_p, proxies: [DIRECT, 倍率, 节点选择] }
+  - { name: 倍率, type: select, <<: *use_p, filter: "0.01" }
+  - { name: TVB, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择] }
   # 这里的 dns 指海外解析 dns 走的节点，一般跟随节点选择即可
   #- { name: dns, <<: *pr }
   # WARP 配置链式出站
@@ -500,18 +500,18 @@ proxy-groups:
   - { name: 其他, <<: *pr }
 
   # 分隔,下面是地区分组
-  - { name: 香港, <<: *use, filter: "(?i)港|hk|hongkong|hong kong" }
-  - { name: 台湾, <<: *use, filter: "(?i)台|tw|taiwan" }
-  - { name: 日本, <<: *use, filter: "(?i)日本|jp|japan" }
-  - { name: 美国, <<: *use, filter: "(?i)美|us|unitedstates|united states" }
-  - { name: 新加坡, <<: *use, filter: "(?i)(新|sg|singapore)" }
+  - { name: 香港, <<: *use_p, filter: "(?i)港|hk|hongkong|hong kong" }
+  - { name: 台湾, <<: *use_p, filter: "(?i)台|tw|taiwan" }
+  - { name: 日本, <<: *use_p, filter: "(?i)日本|jp|japan" }
+  - { name: 美国, <<: *use_p, filter: "(?i)美|us|unitedstates|united states" }
+  - { name: 新加坡, <<: *use_p, filter: "(?i)(新|sg|singapore)" }
   - {
       name: 其它地区,
-      <<: *use,
+      <<: *use_p,
       filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*",
     }
   #- { name: 全部节点, type: select, <<: *use }
-  - { name: 自动选择, <<: *use, tolerance: 2, type: url-test }
+  - { name: 自动选择, <<: *use_p, tolerance: 2, type: url-test }
 
 rules:
   - RULE-SET,Zhilian,国内
