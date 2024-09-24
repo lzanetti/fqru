@@ -21,6 +21,7 @@ pr:
         美国,
         倍率,
         Mytvsuper,
+        MytvsuperAuto
         其它地区,
         全部节点,
         自动选择,
@@ -509,6 +510,7 @@ proxy-groups:
       filter: "(?i)^(?!.*(?:🇭🇰|🇯🇵|🇺🇸|🇸🇬|🇨🇳|港|hk|hongkong|台|tw|taiwan|日|jp|japan|新|sg|singapore|美|us|unitedstates)).*",
       icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/LA_Map.png,
     }
+  - { name: MytvsuperAuto, type: url-test, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png }
   #- { name: 全部节点, type: select, <<: *use }
   - { name: 自动选择, <<: *use_p, tolerance: 2, type: url-test, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png }
 
