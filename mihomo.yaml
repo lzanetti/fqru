@@ -530,7 +530,7 @@ proxy-groups:
     }
   #- { name: MytvsuperAuto, type: url-test, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png }
   - { name: MytvsuperUS, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png }
-  - { name: MytvsuperHK, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)港|hk|hongkong|hong kong|国内", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png }
+  - { name: MytvsuperHK, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)港|HK|HongKong|Hong Kong|国内|CN|CF", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png }
   #- { name: 全部节点, type: select, <<: *use }
   - { name: 自动选择, <<: *use_p, tolerance: 2, type: url-test, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png }
 
