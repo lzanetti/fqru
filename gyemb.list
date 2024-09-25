@@ -149,5 +149,5 @@ DOMAIN-SUFFIX,stream2.misakaf.org
 DOMAIN-SUFFIX,stream3.misakaf.org
 DOMAIN-SUFFIX,stream4.misakaf.org
 DOMAIN-SUFFIX,stream_pilipili.misakaf.org
-DOMAIN-SUFFIX,niceduck.me
-DOMAIN-SUFFIX,niceduck.lol
+#DOMAIN-SUFFIX,niceduck.me
+#DOMAIN-SUFFIX,niceduck.lol
