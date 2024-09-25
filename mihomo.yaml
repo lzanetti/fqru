@@ -21,7 +21,8 @@ pr:
         美国,
         倍率,
         Mytvsuper,
-        MytvsuperAuto,
+        MytvsuperUS,
+        MytvsuperHK,
         其它地区,
         全部节点,
         自动选择,
@@ -64,6 +65,7 @@ use_p: &use_p
     - PQ机场
     - JayCloud
     - YF机场
+    - NiceDuck
     # - 本地配置
 
 # 订阅链接
@@ -111,6 +113,11 @@ proxy-providers:
     <<: *p
     # path: ./proxy_provider/mytvsuper.yaml
     url: "https://sub.443888.xyz/vless"
+    exclude-filter: "套|距|剩|官"
+  NiceDuck:
+    <<: *p
+    # path: ./proxy_provider/NiceDuck.yaml
+    url: "https://sub1.niceduck.cloud/api/v1/client/hy?token=bb836dc16e335654378a8eacbbc4a2e3"
     exclude-filter: "套|距|剩|官"
   # 本地配置:
     # <<: *p
@@ -439,7 +446,7 @@ proxy-groups:
       name: 节点选择,
       type: select,
       proxies:
-        [全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, Mytvsuper, MytvsuperAuto, DIRECT],
+        [全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, Mytvsuper, MytvsuperUS, MytvsuperHK, DIRECT],
       icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Quantumult_X.png,
     }
   - { name: 全部节点, <<: *use_p, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png }
@@ -447,7 +454,7 @@ proxy-groups:
   #Emby及倍率
   - { name: Emby, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png }
   - { name: Emby其他, type: select, <<: *use_p, proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/emby(1).png }
-  - { name: 倍率, type: select, proxies: [Mytvsuper, MytvsuperAuto], <<: *use_p, filter: "0.01", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/quanqiu(3).png }
+  - { name: 倍率, type: select, proxies: [Mytvsuper, MytvsuperUS, MytvsuperHK], <<: *use_p, filter: "0.01", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/quanqiu(3).png }
   - { name: TVB, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TVB.png }
   # 这里的 dns 指海外解析 dns 走的节点，一般跟随节点选择即可
   #- { name: dns, <<: *pr }
@@ -456,12 +463,12 @@ proxy-groups:
 
   - { name: 广告拦截, type: select, proxies: [REJECT, DIRECT, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png }
   - { name: OpenAI, <<: *pr, icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/ChatGPT.png }
-  - { name: Tiktok, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png }
+  - { name: 微软服务, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png }
   # Apple 推荐走全局直连
-  - { name: Apple, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png }
+  #- { name: Apple, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png }
   - { name: Google, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png }
   - { name: Telegram, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png }
-  - { name: Twitter, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png }
+  #- { name: Twitter, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png }
   #- { name: Pixiv, <<: *pr }
   #- { name: ehentai, <<: *pr }
   # 下面两个看需求启用，打开之后会代理全站流量，可能导致部分版权视频反而无法播放或视频播放速度缓慢
@@ -469,13 +476,14 @@ proxy-groups:
 # - {name: 哔哩哔哩, <<: *pr}
 # - {name: 哔哩东南亚, <<: *pr}
   #- { name: 巴哈姆特, <<: *pr }
+  - { name: Tiktok, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png }
   - { name: YouTube, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png }
   - { name: NETFLIX, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png }
   - { name: Spotify, <<: *pr, icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/spotify(green).png }
   - { name: Github, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub_Letter.png }
   #- { name: Steam, <<: *pr }
-  - { name: OneDrive, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png }
-  - { name: 微软服务, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png }
+  #- { name: OneDrive, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png }
+  
   - {
       name: 国内,
       type: select,
@@ -512,7 +520,8 @@ proxy-groups:
       icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/LA_Map.png,
     }
   #- { name: MytvsuperAuto, type: url-test, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png }
-  - { name: MytvsuperAuto, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png }
+  - { name: MytvsuperUS, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png }
+  - { name: MytvsuperHK, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)港|hk|hongkong|hong kong|国内", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png }
   #- { name: 全部节点, type: select, <<: *use }
   - { name: 自动选择, <<: *use_p, tolerance: 2, type: url-test, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png }
 
@@ -539,11 +548,11 @@ rules:
   - RULE-SET,TiktokG,Tiktok
   - RULE-SET,games-cn,国内
   - GEOSITE,openai,OpenAI
-  - GEOSITE,apple,Apple
-  - GEOSITE,apple-cn,Apple
+  - GEOSITE,apple,DIRECT
+  - GEOSITE,apple-cn,DIRECT
   #- GEOSITE,ehentai,ehentai
   - GEOSITE,github,Github
-  - GEOSITE,twitter,Twitter
+  #- GEOSITE,twitter,Twitter
   - GEOSITE,youtube,YouTube
   - GEOSITE,google,Google
   - GEOSITE,google-cn,Google # Google CN 不走代理会导致香港等地区节点 Play Store 异常
@@ -554,14 +563,14 @@ rules:
   #- GEOSITE,pixiv,Pixiv
   - GEOSITE,steam@cn,DIRECT
   #- GEOSITE,steam,Steam
-  - GEOSITE,onedrive,OneDrive
+  - GEOSITE,onedrive,DIRECT
   - GEOSITE,microsoft,微软服务
   - GEOSITE,geolocation-!cn,其他
 # - AND,(AND,(DST-PORT,443),(NETWORK,UDP)),(NOT,((GEOIP,CN))),REJECT # quic
   - GEOIP,google,Google
   - GEOIP,netflix,NETFLIX
   - GEOIP,telegram,Telegram
-  - GEOIP,twitter,Twitter
+  #- GEOIP,twitter,Twitter
   - RULE-SET,Streaming,倍率
   - GEOSITE,CN,国内
   - GEOIP,CN,国内
