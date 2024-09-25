@@ -197,6 +197,14 @@ rule-providers:
     path: ./rule_provider/gyemb.list
     url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/gyemb.list"
     interval: 86400
+  # NiceDuck Emby
+  Embynd:
+    type: http
+    behavior: classical
+    format: text
+    path: ./rule_provider/niceduck.list
+    url: "https://mirror.ghproxy.com/https://raw.githubusercontent.com/lzanetti/fqru/refs/heads/main/niceduck.list"
+    interval: 86400
   #Emby qtf
   EmbyQTF:
     type: http
@@ -453,6 +461,7 @@ proxy-groups:
   - { name: Mytvsuper, type: select, use: [mytvsuper], icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png }
   #Emby及倍率
   - { name: Emby, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png }
+  - { name: EmbyND, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/niceduck.png }
   - { name: Emby其他, type: select, <<: *use_p, proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/emby(1).png }
   - { name: 倍率, type: select, proxies: [Mytvsuper, MytvsuperUS, MytvsuperHK], <<: *use_p, filter: "0.01", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/quanqiu(3).png }
   - { name: TVB, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TVB.png }
@@ -540,6 +549,7 @@ rules:
   - RULE-SET,MetaCubeX-AD,广告拦截
   - RULE-SET,DustinWin,广告拦截
   - RULE-SET,EmbyGYF,Emby
+  - RULE-SET,Embynd,EmbyND
   - RULE-SET,EmbyQTF,Emby其他
   - RULE-SET,TVBTV,TVB
   - RULE-SET,BeilvMedia,倍率
