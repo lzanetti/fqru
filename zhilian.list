@@ -8,5 +8,5 @@ DOMAIN-SUFFIX,fengshows.cn
 DOMAIN-SUFFIX,tiangou.xyz
 DOMAIN-SUFFIX,proxy.huazi.me
 DOMAIN-SUFFIX,stats.qiumibao.com
-DOMAIN-SUFFIX,niceduck.me
-DOMAIN-SUFFIX,niceduck.lol
+#DOMAIN-SUFFIX,niceduck.me
+#DOMAIN-SUFFIX,niceduck.lol
