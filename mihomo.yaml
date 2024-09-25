@@ -44,7 +44,7 @@ p: &p
     # 节点自动切换差值，单位为毫秒
     tolerance: 100
 
-LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, expected-status: 204, hidden: true, include-all: true}
+LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, expected-status: 204, hidden: true}
 # 基础配置
 # --------------------------------------------------
 # 如果你是小白，那么你只需要修改分割线以内的内容
