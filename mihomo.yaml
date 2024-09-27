@@ -360,7 +360,7 @@ sniffer:
 tun:
   enable: true # enable 'true'
   #stack: system  # or 'gvisor'
-  stack: system
+  stack: mixed
   dns-hijack:
     - "any:53"
     - "tcp://any:53"
