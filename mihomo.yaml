@@ -45,7 +45,7 @@ p: &p
     # 节点自动切换差值，单位为毫秒
     tolerance: 100
 
-LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, expected-status: 204, hidden: true}
+LoadBalance: &LoadBalance {type: load-balance, interval: 6, lazy: true, url: 'https://www.google.com/generate_204', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, expected-status: 204}
 # 基础配置
 # --------------------------------------------------
 # 如果你是小白，那么你只需要修改分割线以内的内容
@@ -82,7 +82,7 @@ proxy-providers:
     <<: *p
     # path: ./proxy_provider/Ash.yaml
     url: "https://junnanliangnv.egfu.cn/api/v1/client/subscribe?token=666370e1eeb462deffe0a8b8a8249183"
-    exclude-filter: "套|距|剩|官|去除"
+    exclude-filter: "套|距|剩|官|去除|条"
 
   PQ机场:
     <<: *p
@@ -100,8 +100,8 @@ proxy-providers:
     url: "https://study.jaycloud11111.top/study?token=b2590afb3a5e508734b1d45bd777dcdf"
     override:
       proxy-name:
-      - pattern: "油管无广告"
-        target: ""
+      - pattern: ""
+        target: "-油管无广告"
     exclude-filter: "套|距|剩|官"
 
   YF机场:
