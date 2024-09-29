@@ -492,7 +492,8 @@ proxy-groups:
   # Apple 推荐走全局直连
   #- { name: Apple, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png }
   - { name: Google, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png }
-  - { name: Telegram, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png }
+  #- { name: Telegram, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png }
+  - { name: Telegram, <<: *LoadBalance, use: [ACA, Ash, NiceDuck], filter: "(?i)(新|sg|singapore)", exclude-filter: "宽|IPLC|ISP", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png }
   #- { name: Twitter, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png }
   #- { name: Pixiv, <<: *pr }
   #- { name: ehentai, <<: *pr }
