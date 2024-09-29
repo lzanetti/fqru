@@ -599,6 +599,6 @@ rules:
   - GEOIP,telegram,Telegram
   #- GEOIP,twitter,Twitter
   - RULE-SET,Streaming,倍率
-  - GEOSITE,CN,国内
-  - GEOIP,CN,国内
+  - GEOSITE,CN,国内,no-resolve
+  - GEOIP,CN,国内,no-resolve
   - MATCH,其他
