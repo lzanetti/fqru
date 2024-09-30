@@ -552,7 +552,7 @@ proxy-groups:
   - { name: 自动选择, <<: *use_p, tolerance: 2, type: url-test, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png }
 
 rules:
-  - RULE-SET,Zhilian,国内
+  - RULE-SET,Zhilian,国内,no-resolve
   # 若需禁用 QUIC 请取消注释 QUIC 两条规则
   # 防止 YouTube 等使用 QUIC 导致速度不佳, 禁用 443 端口 UDP 流量（不包括国内）
 
@@ -565,11 +565,11 @@ rules:
   - RULE-SET,AWAvenue,广告拦截
   - RULE-SET,MetaCubeX-AD,广告拦截
   - RULE-SET,DustinWin,广告拦截
-  - RULE-SET,EmbyGYF,Emby
-  - RULE-SET,Embynd,EmbyND
-  - RULE-SET,EmbyQTF,Emby其他
-  - RULE-SET,TVBTV,TVB
-  - RULE-SET,BeilvMedia,倍率
+  - RULE-SET,EmbyGYF,Emby,no-resolve
+  - RULE-SET,Embynd,EmbyND,no-resolve
+  - RULE-SET,EmbyQTF,Emby其他,no-resolve
+  - RULE-SET,TVBTV,TVB,no-resolve
+  - RULE-SET,BeilvMedia,倍率,no-resolve
   - RULE-SET,JPPN,日本
   
   - RULE-SET,TiktokG,Tiktok
