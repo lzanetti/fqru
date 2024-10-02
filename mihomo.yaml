@@ -112,8 +112,8 @@ proxy-providers:
   mytvsuper:
     <<: *p
     # path: ./proxy_provider/mytvsuper.yaml
-    url: "https://sub.443888.xyz/vless"
-    exclude-filter: "套|距|剩|官"
+    url: "http://em7.buzz/v3/subscr?id=d6fbe10eaf944ff4ab8d29f5f91c84aa"
+    exclude-filter: "套|距|剩|官|红|家|到|群"
   NiceDuck:
     <<: *p
     # path: ./proxy_provider/NiceDuck.yaml
