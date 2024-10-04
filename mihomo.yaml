@@ -102,7 +102,7 @@ proxy-providers:
       proxy-name:
       - pattern: "-油管无广告"
         target: ""
-    exclude-filter: "套|距|剩|官"
+    exclude-filter: "套|距|剩|官|修|库"
 
   YF机场:
     <<: *p
