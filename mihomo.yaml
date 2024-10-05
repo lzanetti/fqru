@@ -75,7 +75,7 @@ proxy-providers:
   ACA:
     <<: *p
     # path: ./proxy_provider/ACA.yaml
-    url: "https://dadada.acaisbest.com/api/v1/client/subscribe?token=4d4e8c97ccd9f8defb788e8b838eb5e9"
+    url: "https://dadada.acaisbest.com/api/v1/client/subscribe?token=c2bd283ad9a7ff5897a32097a8f395aa"
     exclude-filter: "套|距|剩|官"
 
   Ash:
