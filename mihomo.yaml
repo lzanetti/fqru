@@ -479,7 +479,7 @@ proxy-groups:
   - { name: Emby, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png }
   - { name: EmbyND, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/niceduck.png }
   - { name: Emby其他, type: select, <<: *use_p, proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/emby(1).png }
-  - { name: 倍率, type: select, proxies: [Mytvsuper, MytvsuperUS, MytvsuperHK], <<: *use_p, filter: "0.01", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/quanqiu(3).png }
+  - { name: 倍率, type: select, proxies: [Mytvsuper, MytvsuperUS, MytvsuperHK], <<: *use_p, filter: "0.01|0.1", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/quanqiu(3).png }
   - { name: TVB, type: select, <<: *use_p, filter: "0.01", proxies: [DIRECT, 倍率, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TVB.png }
   # 这里的 dns 指海外解析 dns 走的节点，一般跟随节点选择即可
   #- { name: dns, <<: *pr }
