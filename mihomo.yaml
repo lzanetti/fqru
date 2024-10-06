@@ -66,6 +66,7 @@ use_p: &use_p
     - JayCloud
     - YF机场
     - NiceDuck
+    - PingZi
     # - 本地配置
 
 # 订阅链接
@@ -118,6 +119,11 @@ proxy-providers:
     <<: *p
     # path: ./proxy_provider/NiceDuck.yaml
     url: "https://sub1.niceduck.cloud/api/v1/client/hy?token=bb836dc16e335654378a8eacbbc4a2e3"
+    exclude-filter: "套|距|剩|官"
+  PingZi:
+    <<: *p
+    # path: ./proxy_provider/PingZi.yaml
+    url: "https://get.naizi.vip/api/v1/client/subscribe?token=74c05a27fe24039bbad66ba84127d5af"
     exclude-filter: "套|距|剩|官"
   # 本地配置:
     # <<: *p
@@ -493,7 +499,7 @@ proxy-groups:
   #- { name: Apple, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png }
   - { name: Google, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png }
   #- { name: Telegram, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png }
-  - { name: Telegram, <<: *LoadBalance, use: [ACA, Ash, NiceDuck], filter: "(?i)(新|sg|singapore)", exclude-filter: "宽|IPLC|ISP", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png }
+  - { name: Telegram, <<: *LoadBalance, use: [ACA, Ash, NiceDuck, PingZi], filter: "(?i)(新|sg|singapore)", exclude-filter: "宽|IPLC|ISP", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png }
   #- { name: Twitter, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png }
   #- { name: Pixiv, <<: *pr }
   #- { name: ehentai, <<: *pr }
