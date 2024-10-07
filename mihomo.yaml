@@ -570,7 +570,7 @@ proxy-groups:
   - { name: PingziAU, type: url-test, use: [PingZi], filter: "(?i)澳大利亚|au|australia", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
   
   #- { name: 全部节点, type: select, <<: *use }
-  - { name: 自动选择, <<: *use_p, tolerance: 2, type: url-test, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png }
+  #- { name: 自动选择, <<: *use_p, tolerance: 2, type: url-test, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png }
 
 rules:
   - RULE-SET,Zhilian,国内,no-resolve
