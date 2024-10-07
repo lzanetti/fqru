@@ -476,7 +476,7 @@ proxy-groups:
       name: 节点选择,
       type: select,
       proxies:
-        [全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, Mytvsuper, MytvsuperUS, MytvsuperHK, PingziUS, PingziHK, PingziSG, PingziJP, PingziKR, PingziIN, PingziAU, DIRECT],
+        [全部节点, 自动选择, 香港, 台湾, 日本, 新加坡, 美国, 其它地区, Mytvsuper, MytvsuperUS, MytvsuperHK, DIRECT],
       icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Quantumult_X.png,
     }
   - { name: 全部节点, <<: *use_p, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png }
@@ -554,13 +554,13 @@ proxy-groups:
   #- { name: MytvsuperAuto, type: url-test, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png }
   - { name: MytvsuperUS, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png, hidden: true }
   - { name: MytvsuperHK, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)港|HK|HongKong|Hong Kong|国内|CN|CF", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png, hidden: true }
-  - { name: PingziUS, type: url-test, use: [PingZi], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziHK, type: url-test, use: [PingZi], filter: "(?i)港|HK|HongKong|Hong Kong|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziSG, type: url-test, use: [PingZi], filter: "(?i)坡|SG|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziJP, type: url-test, use: [PingZi], filter: "(?i)日|JP|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziKR, type: url-test, use: [PingZi], filter: "(?i)韩|KR|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziIN, type: url-test, use: [PingZi], filter: "(?i}印|IN|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziAU, type: url-test, use: [PingZi], filter: "(?i)澳|AU|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  #- { name: PingziUS, type: url-test, use: [PingZi], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  #- { name: PingziHK, type: url-test, use: [PingZi], filter: "(?i)港|HK|HongKong|Hong Kong|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  #- { name: PingziSG, type: url-test, use: [PingZi], filter: "(?i)坡|SG|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  #- { name: PingziJP, type: url-test, use: [PingZi], filter: "(?i)日|JP|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  #- { name: PingziKR, type: url-test, use: [PingZi], filter: "(?i)韩|KR|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  #- { name: PingziIN, type: url-test, use: [PingZi], filter: "(?i}印|IN|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  #- { name: PingziAU, type: url-test, use: [PingZi], filter: "(?i)澳|AU|", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
   
   #- { name: 全部节点, type: select, <<: *use }
   - { name: 自动选择, <<: *use_p, tolerance: 2, type: url-test, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png }
