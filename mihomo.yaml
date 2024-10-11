@@ -500,11 +500,12 @@ proxy-groups:
   # - { name: WARP前置, <<: *pr, exclude-type: "wireguard" }
 
   - { name: 广告拦截, type: select, proxies: [REJECT, DIRECT, 节点选择], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png }
-  - { name: OpenAI, <<: *pr, icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/ChatGPT.png }
   - { name: 微软服务, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png }
+  - { name: OpenAI, <<: *pr, icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/ChatGPT.png }
   # Apple 推荐走全局直连
   #- { name: Apple, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple.png }
   - { name: Google, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png }
+  - { name: Github, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub_Letter.png }
   #- { name: Telegram, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png }
   - { name: Telegram, <<: *LoadBalance, use: [ACA, Ash, NiceDuck, PingZi], filter: "(?i)(新|sg|singapore)", exclude-filter: "宽|IPLC|ISP", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png, hidden: true }
   #- { name: Twitter, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png }
@@ -515,11 +516,10 @@ proxy-groups:
 # - {name: 哔哩哔哩, <<: *pr}
 # - {name: 哔哩东南亚, <<: *pr}
   #- { name: 巴哈姆特, <<: *pr }
-  - { name: Tiktok, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png }
   - { name: YouTube, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png }
+  - { name: Tiktok, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png }
   - { name: NETFLIX, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png }
   - { name: Spotify, <<: *pr, icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/spotify(green).png }
-  - { name: Github, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub_Letter.png }
   #- { name: Steam, <<: *pr }
   #- { name: OneDrive, <<: *pr, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png }
   
@@ -561,13 +561,13 @@ proxy-groups:
   #- { name: MytvsuperAuto, type: url-test, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png }
   - { name: MytvsuperUS, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png, hidden: true }
   - { name: MytvsuperHK, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)港|HK|HongKong|Hong Kong|国内|CN|CF", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png, hidden: true }
-  - { name: PingziUS, type: url-test, use: [PingZi], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziHK, type: url-test, use: [PingZi], filter: "(?i)港|HK|HongKong|Hong Kong", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziSG, type: url-test, use: [PingZi], filter: "(?i)(新|sg|singapore)", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziJP, type: url-test, use: [PingZi], filter: "(?i)日本|jp|japan", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziKR, type: url-test, use: [PingZi], filter: "(?i)韩|kr|korea", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziIN, type: url-test, use: [PingZi], filter: "(?i)印度|ind|india", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziAU, type: url-test, use: [PingZi], filter: "(?i)澳大利亚|au|australia", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  - { name: PingziUS, <<: *LoadBalance, use: [PingZi], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  - { name: PingziHK, <<: *LoadBalance, use: [PingZi], filter: "(?i)港|HK|HongKong|Hong Kong", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  - { name: PingziSG, <<: *LoadBalance, use: [PingZi], filter: "(?i)(新|sg|singapore)", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  - { name: PingziJP, <<: *LoadBalance, use: [PingZi], filter: "(?i)日本|jp|japan", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  - { name: PingziKR, <<: *LoadBalance, use: [PingZi], filter: "(?i)韩|kr|korea", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  - { name: PingziIN, <<: *LoadBalance, use: [PingZi], filter: "(?i)印度|ind|india", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  - { name: PingziAU, <<: *LoadBalance, use: [PingZi], filter: "(?i)澳大利亚|au|australia", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
   
   #- { name: 全部节点, type: select, <<: *use }
   - { name: 自动选择, <<: *use_p, tolerance: 2, type: url-test, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png, hidden: true }
