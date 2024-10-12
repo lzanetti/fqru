@@ -562,7 +562,7 @@ proxy-groups:
   - { name: MytvsuperUS, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png, hidden: true }
   - { name: MytvsuperHK, <<: *LoadBalance, use: [mytvsuper], filter: "(?i)港|HK|HongKong|Hong Kong|国内|CN|CF", icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png, hidden: true }
   - { name: PingziUS, <<: *LoadBalance, use: [ACA, Ash], filter: "(?i)美|us|unitedstates|united states", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
-  - { name: PingziHK, <<: *LoadBalance, use: [ACA, Ash], filter: "(?i)港|HK|HongKong|Hong Kong", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
+  - { name: PingziHK, <<: *LoadBalance, use: [ACA, Ash], filter: "^(?!.*(IPLC|0.01|ISP|宽)).*(港|HK|Hong Kong)", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
   - { name: PingziSG, <<: *LoadBalance, use: [ACA, Ash], filter: "(?i)(新|sg|singapore)", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
   - { name: PingziJP, <<: *LoadBalance, use: [ACA, Ash], filter: "(?i)日本|jp|japan", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
   - { name: PingziKR, <<: *LoadBalance, use: [ACA, Ash, PingZi], filter: "(?i)韩|kr|korea", icon: https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/rocket(1).png, hidden: true }
