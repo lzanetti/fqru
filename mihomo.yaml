@@ -95,12 +95,12 @@ proxy-providers:
   PQ机场:
     <<: *p
     # path: ./proxy_provider/PQ机场.yaml
-    url: "https://xn--cp3a08l.com/api/v1/client/subscribe?token=a396deeda55a15f90e5677e9d0418b27"
+    url: "https://xn--cp3a08l.com/api/v1/client/subscribe?token=a434f4817e9be145ea69269719d80898"
     override:
       proxy-name:
       - pattern: "0.01倍"
         target: "0.01x"
-    exclude-filter: "套|距|剩|官|2倍|5倍"
+    exclude-filter: "套|距|剩|官|2倍|5倍|-3|-5|-2"
 
   JayCloud:
     <<: *p
