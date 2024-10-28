@@ -83,19 +83,19 @@ proxy-providers:
   ACA:
     <<: *p
     # path: ./proxy_provider/ACA.yaml
-    url: "https://dadada.acaisbest.com/api/v1/client/subscribe?token=c2bd283ad9a7ff5897a32097a8f395aa"
+    url: "http://127.0.0.1:38324/download/ACA"
     exclude-filter: "套|距|剩|官"
 
   Ash:
     <<: *p
     # path: ./proxy_provider/Ash.yaml
-    url: "https://junnanliangnv.egfu.cn/api/v1/client/subscribe?token=666370e1eeb462deffe0a8b8a8249183"
+    url: "http://127.0.0.1:38324/download/Ash"
     exclude-filter: "套|距|剩|官|去除|条"
 
   PQ机场:
     <<: *p
     # path: ./proxy_provider/PQ机场.yaml
-    url: "https://xn--cp3a08l.com/api/v1/client/subscribe?token=a434f4817e9be145ea69269719d80898"
+    url: "http://127.0.0.1:38324/download/pq%E2%9C%88%EF%B8%8F"
     override:
       proxy-name:
       - pattern: "0.01倍"
@@ -105,7 +105,7 @@ proxy-providers:
   JayCloud:
     <<: *p
     # path: ./proxy_provider/JayCloud.yaml
-    url: "https://study.jaycloud11111.top/study?token=b2590afb3a5e508734b1d45bd777dcdf"
+    url: "http://127.0.0.1:38324/download/JayCloud"
     override:
       proxy-name:
       - pattern: "-油管无广告"
@@ -115,7 +115,7 @@ proxy-providers:
   YF机场:
     <<: *p
     # path: ./proxy_provider/YF机场.yaml
-    url: "https://www.yfjc.xyz/api/v1/client/subscribe?token=1b1502df00abe390e4acf2b1fe6e0f07"
+    url: "http://127.0.0.1:38324/download/yf%E2%9C%88%EF%B8%8F"
     exclude-filter: "套|距|剩|官"
   mytvsuper:
     <<: *p
@@ -125,12 +125,12 @@ proxy-providers:
   NiceDuck:
     <<: *p
     # path: ./proxy_provider/NiceDuck.yaml
-    url: "https://sub1.niceduck.cloud/api/v1/client/hy?token=bb836dc16e335654378a8eacbbc4a2e3"
+    url: "http://127.0.0.1:38324/download/NiceDuck"
     exclude-filter: "套|距|剩|官"
   PingZi:
     <<: *p
     # path: ./proxy_provider/PingZi.yaml
-    url: "https://get.naizi.vip/api/v1/client/subscribe?token=74c05a27fe24039bbad66ba84127d5af"
+    url: "http://127.0.0.1:38324/download/%E7%93%B6%E5%AD%90%E4%BA%91"
     exclude-filter: "套|距|剩|官"
   # 本地配置:
     # <<: *p
